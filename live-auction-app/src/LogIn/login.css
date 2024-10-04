@@ -1,0 +1,111 @@
+/* Background Animation */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.App {
+  background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  width: 400px;
+  background-color: rgb(53, 61, 15);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Toggle Panel Styles */
+.toggle-panel {
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(53, 61, 15); /* Dark purple color */
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Separator */
+}
+
+.toggle-button {
+  width: 50%;
+  padding: 10px 0;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: #324d33; /* Match background color */
+  transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+  background-color: #042c0d;; /* Lighter purple on hover */
+}
+
+.toggle-button.active {
+  background-color: #240224;; /* Highlight active button */
+}
+
+/* Form Container */
+.form-container {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Remove the following as it's incorrect and causing errors */
+.login-form.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  color: white;
+  text-align: center;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid rgb(53, 61, 15);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #0d6b10;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #45a049;
+}

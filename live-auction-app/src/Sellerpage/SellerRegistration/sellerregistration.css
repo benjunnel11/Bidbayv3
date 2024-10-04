@@ -1,0 +1,82 @@
+@keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .App {
+    background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centering the content vertically */
+  }
+  
+  .registration-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(53, 61, 15);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    height: auto; /* Allow height to adjust based on content */
+  }
+  
+  .registration-page form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .registration-page input {
+    display: block;
+    width: calc(100% - 20px); /* Adjust width to account for padding */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #55790f;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+  
+  .registration-page button {
+    display: block;
+    width: calc(100% - 20px); /* Adjust width to account for padding */
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #0d6b10;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .registration-page button:hover {
+    background-color: #0f8614;
+  }
+  
+  
+  .back-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f44336; /* Red color for back button */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  

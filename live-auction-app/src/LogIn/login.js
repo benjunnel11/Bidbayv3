@@ -3,9 +3,13 @@ import './login.css';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase'; 
 import { signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth'; // Import fetchSignInMethodsForEmail
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { signInWithFacebook } from '../firebase';
 import { firestore } from '../firebase';
 import { setDoc, getDoc, doc } from 'firebase/firestore';
+import { FaFacebook } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
+import { FaUserCircle } from "react-icons/fa";
 
 function LoginPage() {
   const [isBidderLogin, setIsBidderLogin] = useState(false);
@@ -106,6 +110,43 @@ const handleFacebookLoginbidder = async () => {
   }
 };
 
+const handleGoogleLogin = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    
+    if (user) {
+      const { displayName, email, uid } = user;
+      
+      const userDoc = doc(firestore, isBidderLogin ? 'userBidder' : 'userSeller', uid);
+      const userSnap = await getDoc(userDoc);
+
+      if (!userSnap.exists()) {
+        await setDoc(userDoc, {
+          username: displayName?.split(" ")[0] || '',
+          email: email || '',
+          firstName: displayName?.split(" ")[0] || '',
+          lastName: displayName?.split(" ")[1] || '',
+          provider: 'google',
+        });
+        navigate(isBidderLogin ? '/bidderregistration2' : '/sellerregistration2');
+      } else {
+        navigate(isBidderLogin ? '/bidderhomepage' : '/sellerhomepage');
+      }
+    }
+  } catch (error) {
+    console.error('Error during Google login:', error);
+    setError(error.message || 'An unknown error occurred during Google login.');
+  }
+};
+
+
+
+
+
+
+
 // Close the login page
 const onClose = () => {
   navigate(-1);
@@ -151,10 +192,18 @@ return (
               onChange={(e) => setPassword(e.target.value)} // Capture password input
             />
             <button onClick={handleLogin}>Login</button>
-            <button onClick={onSellerRegister}>Register as Seller</button>
-            <button onClick={handleFacebookLoginseller}>
-              <i className="fab fa-facebook-f"></i> Login with Facebook
-            </button>
+            <button onClick={onSellerRegister} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',gap: '8px' }}>
+  <FaUserCircle style={{ marginRight: '4px' }} />
+  Register as Seller
+</button>
+
+            <button onClick={handleGoogleLogin} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',gap: '8px' }}>
+  <FcGoogle /> Login with Google
+</button>
+            <button onClick={handleFacebookLoginseller} style={{display: 'flex', alignItems: 'center', justifyContent: 'center',gap: '8px' }}>
+  <FaFacebook /> Login with Facebook
+</button>
+
             <button onClick={onClose}>Close</button>
           </div>
         ) : (
@@ -173,10 +222,15 @@ return (
               onChange={(e) => setPassword(e.target.value)} // Capture password input
             />
             <button onClick={handleLogin}>Login</button>
-            <button onClick={onBidderRegister}>Register as Bidder</button>
-            <button onClick={handleFacebookLoginbidder}>
-              <i className="fab fa-facebook-f"></i> Login with Facebook
-            </button>
+            <button onClick={onBidderRegister} style={{display: 'flex', alignItems:'center', justifyContent: 'center', gap:' 8px'}}> <FaUserCircle style={{ marginRight: '4px' }} />Register as Bidder</button>
+            <button onClick={handleGoogleLogin} style={{  display: 'flex', alignItems: 'center', justifyContent: 'center',gap: '8px' }}>
+  <FcGoogle /> Login with Google
+</button>
+           
+            <button className="facebook-login-btn" onClick={handleFacebookLoginbidder} style={{display: 'flex', alignItems: 'center', justifyContent: 'center',gap: '8px' }}>
+  <FaFacebook /> Login with Facebook
+</button>
+
             <button onClick={onClose}>Close</button>
           </div>
         )}

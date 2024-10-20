@@ -5,6 +5,8 @@ import { FaVideo } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
+import { FaSignOutAlt } from "react-icons/fa";
+
 
 function SellerHomePage() {
   const navigate = useNavigate();
@@ -90,9 +92,11 @@ function SellerHomePage() {
           <button className="dashboard-button" onClick={handleViewSales}>
   <SiGoogleanalytics /> Analytics
 </button>
-          <button className="dashboard-button logout" onClick={handleLogoutClick}>Logout</button>
           <button className="dashboard-button" onClick={handleGoLive}>
     <FaVideo /> Go Live
+  </button>
+  <button className="dashboard-button logout" onClick={handleLogoutClick}>
+    <FaSignOutAlt /> Logout
   </button>
         </nav>
       </div>

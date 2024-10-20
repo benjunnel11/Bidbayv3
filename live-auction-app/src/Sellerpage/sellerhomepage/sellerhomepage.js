@@ -15,6 +15,13 @@ function SellerHomePage() {
 
   const [stream, setStream] = useState(null);
   const webcamContainerRef = useRef(null);
+  
+  const handleStopLive = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+  };
 
 
   const handleGoLive = async () => {
@@ -46,24 +53,30 @@ function SellerHomePage() {
   
 
 
-{stream && (
-  <div className="webcam-container">
-    <video
-      ref={(videoElement) => {
-        if (videoElement) {
-          videoElement.srcObject = stream;
-        }
-      }}
-      autoPlay
-      playsInline
-    />
-  </div>
-)}
+  {stream && (
+    <div className="camera-container">
+      <div className="camera-header">
+        <h3>Live Stream</h3>
+        <button className="exit-button" onClick={handleStopLive}>X</button>
+      </div>
+      <video
+        ref={(videoElement) => {
+          if (videoElement) {
+            videoElement.srcObject = stream;
+          }
+        }}
+        autoPlay
+        playsInline
+      />
+    </div>
+  )}
+  
 
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+
 
   
 

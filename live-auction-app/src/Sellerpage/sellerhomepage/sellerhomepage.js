@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './sellerhomepage.css';
 import { FaVideo } from "react-icons/fa";
@@ -14,7 +14,36 @@ function SellerHomePage() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const [stream, setStream] = useState(null);
+  const webcamContainerRef = useRef(null);
 
+
+  const handleGoLive = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      setStream(mediaStream);
+    } catch (error) {
+      console.error('Error accessing webcam:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (stream && webcamContainerRef.current) {
+      const videoElement = document.createElement('video');
+      videoElement.srcObject = stream;
+      videoElement.autoplay = true;
+      videoElement.playsInline = true;
+      webcamContainerRef.current.appendChild(videoElement);
+
+      return () => {
+        if (webcamContainerRef.current) {
+          webcamContainerRef.current.innerHTML = '';
+        }
+      };
+    }
+  }, [stream]);
+
+  
+  
 
 
 {stream && (
@@ -36,14 +65,6 @@ function SellerHomePage() {
     setIsNavOpen(!isNavOpen);
   };
 
-  const handleGoLive = async () => {
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setStream(mediaStream);
-    } catch (error) {
-      console.error('Error accessing webcam:', error);
-    }
-  };
   
 
   const handleAddNewItem = () => {
@@ -98,7 +119,9 @@ function SellerHomePage() {
   <button className="dashboard-button logout" onClick={handleLogoutClick}>
     <FaSignOutAlt /> Logout
   </button>
+
         </nav>
+        <div ref={webcamContainerRef} className="webcam-container"></div>
       </div>
 
       {showLogoutModal && (

@@ -1,20 +1,27 @@
-import React from 'react'; 
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './bidderhomepage.css'; // Import CSS for styling
+import './bidderhomepage.css';
 
-function SellerHomePage() {
+function BidderHomePage() {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleAddNewItem = () => {
-    navigate('/addnewitem');
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // Implement search functionality here
+    console.log('Searching for:', searchTerm);
   };
 
-  const handleViewItems = () => {
-    navigate('/viewitems');
+  const handleViewAuctions = () => {
+    navigate('/viewauctions');
   };
 
-  const handleViewSales = () => {
-    navigate('/salesanalytics');
+  const handleMyBids = () => {
+    navigate('/mybids');
+  };
+
+  const handleWatchlist = () => {
+    navigate('/watchlist');
   };
 
   const handleViewHistory = () => {
@@ -22,36 +29,50 @@ function SellerHomePage() {
   };
 
   const handleLogout = () => {
-    navigate('/login'); // Redirect to login page
+    navigate('/login');
   };
 
   return (
-    <div className="App">
-      <div className="bidder-homepage">
-        <header className="header">
-          <h2>Bidder Dashboard</h2>
-        </header>
+    <div className="bidder-homepage">
+      <div className="top-bar">
+        <h2>BidBay</h2>
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Search auctions..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button type="submit">Search</button>
+        </form>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
 
-        <div className="buttons-container">
-          <button className="dashboard-button" onClick={handleViewHistory}>
-            View History
-          </button>
-          <button className="dashboard-button" onClick={handleAddNewItem}>
-            Add New Item
-          </button>
-          <button className="dashboard-button" onClick={handleViewItems}>
-            View My Items
-          </button>
-          <button className="dashboard-button" onClick={handleViewSales}>
-            View Sales Analytics
-          </button>
-          <button className="dashboard-button logout" onClick={handleLogout}>
-            Logout
-          </button>
+      <div className="content-wrapper">
+        <div className="side-bar">
+          <nav>
+            <ul>
+              <li onClick={handleViewAuctions}>View Auctions</li>
+              <li onClick={handleMyBids}>My Bids</li>
+              <li onClick={handleWatchlist}>Watchlist</li>
+            </ul>
+          </nav>
+        </div>
+
+        <div className="main-content">
+          <header>
+            <h2>Welcome back Bidder!</h2>
+          </header>
+
+          <div className="dashboard-content">
+            <p>Welcome to your Bidder Dashboard!</p>
+            {/* Add bidder-specific content here */}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default SellerHomePage;
+export default BidderHomePage;
+

@@ -1,73 +1,288 @@
+.App {
+  background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-@keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-  
-  .App {
-    background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Centering the content vertically */
-  }
 .seller-homepage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100vh;
+  background-color: #71741a;
+  transition: left 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  padding-top: 60px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   
-  .header {
-    background-color: #4caf50;
-    color: white;
-    padding: 20px;
-    width: 100%;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+}
+
+.dashboard-button {
+  display: block;
+  width: 90%;
+  padding: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dashboard-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.dashboard-button:last-of-type:not(.logout) {
+  margin-bottom: 30px;
+}
+
+.dashboard-button.logout {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-button.logout:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.nav-toggle.open {
+  transform: rotate(90deg);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100vh;
+  background-color: #71741a;
+  transition: left 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  padding-top: 60px;
+  z-index: 1;
   
-  .buttons-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 50px;
-  }
-  
-  .dashboard-button {
-    width: 200px;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #4caf50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .dashboard-button:hover {
-    background-color: #45a049;
-  }
-  
-  .dashboard-button.logout {
-    background-color: #f44336;
-  }
-  
-  .dashboard-button.logout:hover {
-    background-color: #e53935;
-  }
-  
+}
+.dashboard-button.logout {
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 90px;
+}
+
+
+.side-nav.open {
+  left: 0;
+}
+
+
+
+.dashboard-button {
+  display: block;
+  width: 100%;
+  padding: 20px 15px;
+  margin-bottom: 20px;
+  text-align: left;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+
+
+.dashboard-button:hover {
+  background-color: #ffffff;
+}
+
+.close-nav {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.close-nav:hover {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+
+.profile-container {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  z-index: 3;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ddd;
+  margin-left: 10px;
+  order: 2;
+}
+
+.profile-container h3 {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+  order: 1;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: rgb(91, 102, 37);
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  margin: 0 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  color:#677a11
+}
+
+.dashboard-button svg {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+
+.webcam-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  height: 240px;
+  z-index: 1000;
+}
+
+.webcam-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.camera-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+}
+
+.exit-button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.camera-container video {
+  width: 100%;
+  height: auto;
+  display: block;
+}

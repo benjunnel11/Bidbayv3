@@ -6,6 +6,9 @@ import { signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase
 import { signInWithFacebook } from '../firebase';
 import { firestore } from '../firebase';
 import { setDoc, getDoc, doc } from 'firebase/firestore';
+import { FaFacebook } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
+import { FaUserCircle } from "react-icons/fa";
 
 function LoginPage() {
   const [isBidderLogin, setIsBidderLogin] = useState(false);
@@ -23,25 +26,41 @@ function LoginPage() {
   const handleLogin = async () => {
     setError(''); // Clear previous errors
     try {
-        if (isBidderLogin) {
-            console.log('Bidder login logic');
-            navigate('/bidderhomepage');
-        } else {
-            await signInWithEmailAndPassword(auth, email, password);
-            console.log('Seller logged in successfully');
-            navigate('/sellerhomepage');
-        }
-    } catch (error) {
-        console.error('Error during login:', error);
-        if (error.code === 'auth/account-exists-with-different-credential') {
-            const methods = await fetchSignInMethodsForEmail(auth, email);
-            setError(`This email is associated with: ${methods.join(', ')}. Please log in using one of these methods.`);
-        } else {
-            setError(error.message);
-        }
-    }
-};
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const uid = userCredential.user.uid;
 
+      // Check the user type in Firestore based on the login type (seller or bidder)
+      if (isBidderLogin) {
+        const bidderDoc = await getDoc(doc(firestore, 'userBidder', uid));
+        
+        if (bidderDoc.exists()) {
+          console.log('Bidder logged in successfully');
+          navigate('/bidderhomepage');
+        } else {
+          setError('This account is not registered as a Bidder.');
+          auth.signOut(); // Log the user out if they are not a bidder
+        }
+      } else {
+        const sellerDoc = await getDoc(doc(firestore, 'userSeller', uid));
+        
+        if (sellerDoc.exists()) {
+          console.log('Seller logged in successfully');
+          navigate('/sellerhomepage');
+        } else {
+          setError('This account is not registered as a Seller.');
+          auth.signOut(); // Log the user out if they are not a seller
+        }
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        const methods = await fetchSignInMethodsForEmail(auth, email);
+        setError(`This email is associated with: ${methods.join(', ')}. Please log in using one of these methods.`);
+      } else {
+        setError(error.message);
+      }
+    }
+  };
 
   // Navigate to Seller Registration
   const onSellerRegister = () => {
@@ -56,41 +75,40 @@ function LoginPage() {
   // Handle Facebook Login for Seller
   const handleFacebookLoginseller = async () => {
     try {
-        const result = await signInWithFacebook();
-        const user = result.user;
+      const result = await signInWithFacebook();
+      const user = result.user;
 
-        if (user) {
-            const { displayName, email, uid } = user; // Ensure you're accessing the correct fields
+      if (user) {
+        const { displayName, email, uid } = user;
 
-            // Firestore logic...
-            const userDoc = doc(firestore, 'userSeller', uid);
-            const userSnap = await getDoc(userDoc);
+        const userDoc = doc(firestore, 'userSeller', uid);
+        const userSnap = await getDoc(userDoc);
 
-            if (!userSnap.exists()) {
-                await setDoc(userDoc, {
-                    username: displayName?.split(" ")[0] || '',
-                    email: email || '', // This should now properly access the email
-                    firstName: displayName?.split(" ")[0] || '',
-                    lastName: displayName?.split(" ")[1] || '',
-                    provider: 'facebook',
-                });
-                navigate('/sellerregistration2');
-            } else {
-                navigate('/sellerhomepage');
-            }
+        if (!userSnap.exists()) {
+          await setDoc(userDoc, {
+            username: displayName?.split(" ")[0] || '',
+            email: email || '',
+            firstName: displayName?.split(" ")[0] || '',
+            lastName: displayName?.split(" ")[1] || '',
+            provider: 'facebook',
+          });
+          navigate('/sellerregistration2');
         } else {
-            throw new Error("No user data returned from Facebook login");
+          navigate('/sellerhomepage');
         }
+      } else {
+        throw new Error("No user data returned from Facebook login");
+      }
     } catch (error) {
-        console.error('Error during Facebook login:', error);
-        setError(error.message || 'An unknown error occurred during Facebook login.');
+      console.error('Error during Facebook login:', error);
+      setError(error.message || 'An unknown error occurred during Facebook login.');
     }
-};
-  
-// Handle Facebook Login for Bidder
-const handleFacebookLoginbidder = async () => {
-  try {
-    const result = await signInWithFacebook(); // Assuming this function returns a promise
+  };
+
+  // Handle Facebook Login for Bidder
+  const handleFacebookLoginbidder = async () => {
+    try {
+      const result = await signInWithFacebook(); 
 
     // Check if user successfully logged in
     if (result.user) {
@@ -106,10 +124,10 @@ const handleFacebookLoginbidder = async () => {
   }
 };
 
-// Close the login page
-const onClose = () => {
-  navigate(-1);
-};
+  // Close the login page
+  const onClose = () => {
+    navigate(-1);
+  };
 
 return (
   <div className="App">

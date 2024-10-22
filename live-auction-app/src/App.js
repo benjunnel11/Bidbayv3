@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './Homepage/homepage';
 import LiveManagement from './AdminComponents/LiveManagement/LiveAdmin';
@@ -12,6 +10,7 @@ import BidderRegistrationPage from './Bidderpage/BidderRegistration/bidderregist
 import BidderRegistrationPage2 from './Bidderpage/BidderRegistration/bidderregistration2';
 import SellerHomePage from './Sellerpage/sellerhomepage/sellerhomepage';
 import BidderHomePage from './Bidderpage/bidderhomepage/bidderhomepage';
+import BiddingManagement from './BiddingManagement/biddingmanagement'; // Import BiddingManagement
 import './App.css';
 
 function App() {
@@ -21,7 +20,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Homepage/>}/>
           <Route path='/admin/*' element={<MainAdminContent/>}/>
-          <Route path='./bidderlogin' element={<BidderPage/>}/>
+          <Route path='/bidderlogin' element={<BidderPage/>}/>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/sellerregistration' element={<SellerRegistrationPage/>}/>
           <Route path='/sellerregistration2' element={<SellerRegistrationPage2/>}/>
@@ -29,6 +28,7 @@ function App() {
           <Route path='/bidderregistration2' element={<BidderRegistrationPage2/>}/>
           <Route path='/sellerhomepage' element={<SellerHomePage/>}/>
           <Route path='/bidderhomepage' element={<BidderHomePage/>}/>
+          <Route path='/biddingmanagement' element={<BiddingManagement/>}/> {/* Ensure this route is here */}
           <Route path='*' element={<Homepage/>}/>
         </Routes>
       </Router>
@@ -46,7 +46,7 @@ const MainAdminContent = () => {
         </Routes>
       </div>
     </div>
-  )
+  );
 }
 
 export default App;

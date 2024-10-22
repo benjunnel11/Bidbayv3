@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase'; 
-import { signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth'; 
+import { signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth'; // Import fetchSignInMethodsForEmail
 import { signInWithFacebook } from '../firebase';
 import { firestore } from '../firebase';
 import { setDoc, getDoc, doc } from 'firebase/firestore';

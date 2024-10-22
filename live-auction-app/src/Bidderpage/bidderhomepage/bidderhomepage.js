@@ -75,3 +75,4 @@ function BidderHomePage() {
 }
 
 export default BidderHomePage;
+

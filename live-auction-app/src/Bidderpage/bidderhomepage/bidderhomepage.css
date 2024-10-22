@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   font-family: Arial, sans-serif;
-  background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
+  background: linear-gradient(-45deg, #1a1d1e, #aeb6b8, #525152, #151616);
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
 }

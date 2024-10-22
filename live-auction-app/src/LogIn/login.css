@@ -10,6 +10,18 @@
     background-position: 0% 50%;
   }
 }
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.icon-button svg {
+  font-size: 18px;
+}
+
+
 
 .App {
   background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
@@ -23,7 +35,7 @@
 
 .login-container {
   width: 400px;
-  background-color: rgb(53, 61, 15);
+  background-color: rgb(101, 102, 96);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   overflow: hidden;
@@ -34,7 +46,7 @@
 .toggle-panel {
   display: flex;
   justify-content: space-around;
-  background-color: rgb(53, 61, 15); /* Dark purple color */
+  background-color: rgb(39, 41, 32); /* Dark purple color */
   padding: 10px;
   border-bottom: 1px solid #ddd; /* Separator */
 }
@@ -45,7 +57,7 @@
   cursor: pointer;
   border: none;
   color: white;
-  background-color: #324d33; /* Match background color */
+  background-color: #253826; /* Match background color */
   transition: background-color 0.3s;
 }
 
@@ -99,7 +111,7 @@
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #0d6b10;
+  background-color: #232d23;
   color: white;
   border: none;
   border-radius: 20px;
@@ -107,6 +119,6 @@
 }
 
 .login-form button:hover {
-  background-color: #45a049;
+  background-color: #000000;
 }
 

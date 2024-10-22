@@ -1,5 +1,5 @@
 .App {
-  background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
+  background: linear-gradient(-45deg, #1a1d1e, #aeb6b8, #525152, #151616);
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
   min-height: 100vh;
@@ -37,7 +37,7 @@
   left: -250px;
   width: 250px;
   height: 100vh;
-  background-color: #71741a;
+  background-color: #4e4f4a;
   transition: left 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   padding-top: 60px;
   z-index: 1;
@@ -118,7 +118,7 @@
   left: -250px;
   width: 250px;
   height: 100vh;
-  background-color: #71741a;
+  background-color: #545449;
   transition: left 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   padding-top: 60px;
   z-index: 1;
@@ -145,6 +145,7 @@
   border-radius: 10px;
   background-color: transparent;
   cursor: pointer;
+  color:#525152;
 }
 
 
@@ -207,10 +208,13 @@
 }
 
 .modal {
-  background-color: rgb(91, 102, 37);
+  background-color: rgb(54, 55, 50);
   padding: 20px;
   border-radius: 5px;
   text-align: center;
+}
+.h3{
+ color: white;
 }
 
 .modal-buttons {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom'; // Import useNavigate
 import './biddingmanagement.css';
 
 function Biddingpage() {
@@ -9,6 +9,9 @@ function Biddingpage() {
   const [auctionStatus, setAuctionStatus] = useState("Open");
   const [managementText, setManagementText] = useState("BIDDING MANAGEMENT");
   const [historyText, setHistoryText] = useState("HISTORY");
+
+  // Initialize useNavigate
+  const navigate = useNavigate();
 
   return (
     <div className="bidding-page">
@@ -65,7 +68,8 @@ function Biddingpage() {
               <label>Status: </label>
               <select 
                 value={auctionStatus} 
-                onChange={(e) => setAuctionStatus(e.target.value)}>
+                onChange={(e) => setAuctionStatus(e.target.value)}
+              >
                 <option value="Open">Open Auction</option>
                 <option value="Close">Close Auction</option>
               </select>
@@ -143,7 +147,12 @@ function Biddingpage() {
 
           {/* Options Button */}
           <div className="options-container">
-            <button className="options-button">Options</button>
+            <button 
+              className="options-button" 
+              onClick={() => navigate('/bidderhomepage')} // Navigate to BidderHomePage
+            >
+              Back
+            </button>
           </div>
         </div>
       </div>

@@ -2,10 +2,13 @@ import { useState } from 'react';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase'; 
-import { signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth'; 
+import { signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth'; // Import fetchSignInMethodsForEmail
 import { signInWithFacebook } from '../firebase';
 import { firestore } from '../firebase';
 import { setDoc, getDoc, doc } from 'firebase/firestore';
+import { FaFacebook } from "react-icons/fa6";
+import { FcGoogle } from "react-icons/fc";
+import { FaUserCircle } from "react-icons/fa";
 
 function LoginPage() {
   const [isBidderLogin, setIsBidderLogin] = useState(false);
@@ -107,97 +110,98 @@ function LoginPage() {
     try {
       const result = await signInWithFacebook(); 
 
-      if (result.user) {
-        console.log('Facebook login successful for Bidder');
-        navigate('/bidderhomepage');
-      } else {
-        console.error('Facebook login was not successful');
-        setError('Facebook login failed');
-      }
-    } catch (error) {
-      console.error('Error during Facebook login:', error);
-      setError(error.message);
+    // Check if user successfully logged in
+    if (result.user) {
+      console.log('Facebook login successful for Bidder');
+      navigate('/bidderhomepage'); // Redirect to Bidder Home Page only if login is successful
+    } else {
+      console.error('Facebook login was not successful');
+      setError('Facebook login failed');
     }
-  };
+  } catch (error) {
+    console.error('Error during Facebook login:', error);
+    setError(error.message);
+  }
+};
 
   // Close the login page
   const onClose = () => {
     navigate(-1);
   };
 
-  return (
-    <div className="App">
-      <div className="login-container">
-        {/* Display Error Message */}
-        {error && <p className="error-message">{error}</p>}
-        
-        {/* Toggle Panel */}
-        <div className="toggle-panel">
-          <button
-            className={`toggle-button ${!isBidderLogin ? 'active' : ''}`}
-            onClick={() => setIsBidderLogin(false)}
-          >
-            Login as Seller
-          </button>
-          <button
-            className={`toggle-button ${isBidderLogin ? 'active' : ''}`}
-            onClick={() => setIsBidderLogin(true)}
-          >
-            Login as Bidder
-          </button>
-        </div>
-        
-        {/* Login Form Containers */}
-        <div className="form-container">
-          {!isBidderLogin ? (
-            <div className="login-form seller-login-form">
-              <h2>Seller Login</h2>
-              <input 
-                type="email" 
-                placeholder="Email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input 
-                type="password" 
-                placeholder="Password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button onClick={handleLogin}>Login</button>
-              <button onClick={onSellerRegister}>Register as Seller</button>
-              <button onClick={handleFacebookLoginseller}>
-                <i className="fab fa-facebook-f"></i> Login with Facebook
-              </button>
-              <button onClick={onClose}>Close</button>
-            </div>
-          ) : (
-            <div className="login-form bidder-login-form">
-              <h2>Bidder Login</h2>
-              <input 
-                type="email" 
-                placeholder="Email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input 
-                type="password" 
-                placeholder="Password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button onClick={handleLogin}>Login</button>
-              <button onClick={onBidderRegister}>Register as Bidder</button>
-              <button onClick={handleFacebookLoginbidder}>
-                <i className="fab fa-facebook-f"></i> Login with Facebook
-              </button>
-              <button onClick={onClose}>Close</button>
-            </div>
-          )}
-        </div>
+return (
+  <div className="App">
+    <div className="login-container">
+      {/* Display Error Message */}
+      {error && <p className="error-message">{error}</p>}
+      
+      {/* Toggle Panel */}
+      <div className="toggle-panel">
+        <button
+          className={`toggle-button ${!isBidderLogin ? 'active' : ''}`}
+          onClick={() => setIsBidderLogin(false)}
+        >
+          Login as Seller
+        </button>
+        <button
+          className={`toggle-button ${isBidderLogin ? 'active' : ''}`}
+          onClick={() => setIsBidderLogin(true)}
+        >
+          Login as Bidder
+        </button>
+      </div>
+      
+      {/* Login Form Containers */}
+      <div className="form-container">
+        {!isBidderLogin ? (
+          <div className="login-form seller-login-form">
+            <h2>Seller Login</h2>
+            <input 
+              type="email" 
+              placeholder="Email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} // Capture email input
+            />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} // Capture password input
+            />
+            <button onClick={handleLogin}>Login</button>
+            <button onClick={onSellerRegister}>Register as Seller</button>
+            <button onClick={handleFacebookLoginseller}>
+              <i className="fab fa-facebook-f"></i> Login with Facebook
+            </button>
+            <button onClick={onClose}>Close</button>
+          </div>
+        ) : (
+          <div className="login-form bidder-login-form">
+            <h2>Bidder Login</h2>
+            <input 
+              type="email" 
+              placeholder="Email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} // Capture email input
+            />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} // Capture password input
+            />
+            <button onClick={handleLogin}>Login</button>
+            <button onClick={onBidderRegister}>Register as Bidder</button>
+            <button onClick={handleFacebookLoginbidder}>
+              <i className="fab fa-facebook-f"></i> Login with Facebook
+            </button>
+            <button onClick={onClose}>Close</button>
+          </div>
+        )}
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default LoginPage;

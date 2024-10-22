@@ -24,6 +24,10 @@ function BidderHomePage() {
     navigate('/watchlist');
   };
 
+  const handleViewHistory = () => {
+    navigate('/biddingmanagement'); // Navigate to the Bidding Management page
+  };
+
   const handleLogout = () => {
     navigate('/login');
   };
@@ -71,3 +75,4 @@ function BidderHomePage() {
 }
 
 export default BidderHomePage;
+

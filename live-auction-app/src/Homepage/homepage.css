@@ -30,10 +30,10 @@ h1 {
   }
 }
 
-.App {
-  background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
+.Homepage {
+  background: linear-gradient(-45deg, #1a1d1e, #aeb6b8, #525152, #151616);
   background-size: 400% 400%;
-  animation: gradientAnimation 20s ease infinite;
+  animation: gradientAnimation 15s ease infinite;
   min-height: 100vh;
 }
 /* Rest of the CSS remains the same */
@@ -69,7 +69,7 @@ nav ul li a[data-tooltip]::after {
   top: 120%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(66, 101, 18, 0.833);
+  background-color: rgba(32, 41, 20, 0.833);
   color: white;
   padding: 15px;
   border-radius: 10px;

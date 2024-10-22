@@ -6,6 +6,10 @@ import { signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase
 import { signInWithFacebook } from '../firebase';
 import { firestore } from '../firebase';
 import { setDoc, getDoc, doc } from 'firebase/firestore';
+import { FaFacebook } from "react-icons/fa6";
+import { FaUser } from "react-icons/fa";
+import { FiLogIn } from "react-icons/fi";
+import { IoCloseSharp } from "react-icons/io5";
 
 function LoginPage() {
   const [isBidderLogin, setIsBidderLogin] = useState(false);
@@ -164,12 +168,22 @@ function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button onClick={handleLogin}>Login</button>
-              <button onClick={onSellerRegister}>Register as Seller</button>
-              <button onClick={handleFacebookLoginseller}>
-                <i className="fab fa-facebook-f"></i> Login with Facebook
-              </button>
-              <button onClick={onClose}>Close</button>
+             <button onClick={handleLogin} className="icon-button">
+  <FiLogIn /> Login
+</button>
+
+<button onClick={onSellerRegister} className="icon-button">
+  <FaUser /> Register as Seller
+</button>
+
+<button onClick={handleFacebookLoginseller} className="icon-button">
+  <FaFacebook /> Login with Facebook
+</button>
+
+<button onClick={onClose} className="icon-button">
+  <IoCloseSharp /> Close
+</button>
+
             </div>
           ) : (
             <div className="login-form bidder-login-form">
@@ -186,12 +200,22 @@ function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button onClick={handleLogin}>Login</button>
-              <button onClick={onBidderRegister}>Register as Bidder</button>
-              <button onClick={handleFacebookLoginbidder}>
-                <i className="fab fa-facebook-f"></i> Login with Facebook
-              </button>
-              <button onClick={onClose}>Close</button>
+              <button onClick={handleLogin} className="icon-button">
+  <FiLogIn /> Login
+</button>
+
+<button onClick={onBidderRegister} className="icon-button">
+  <FaUser /> Register as Bidder
+</button>
+
+<button onClick={handleFacebookLoginbidder} className="icon-button">
+  <FaFacebook /> Login with Facebook
+</button>
+
+<button onClick={onClose} className="icon-button">
+  <IoCloseSharp /> Close
+</button>
+
             </div>
           )}
         </div>

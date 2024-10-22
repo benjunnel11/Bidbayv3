@@ -28,7 +28,7 @@ const BidderRegistrationPage2 = () => {
 
     try {
       // Save personal info along with username and email to the bidderUser collection
-      await setDoc(doc(firestore, 'bidderUser', uid), {
+      await setDoc(doc(firestore, 'userBidder', uid), {
         firstName,
         lastName,
         gender,

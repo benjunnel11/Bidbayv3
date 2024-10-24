@@ -8,7 +8,6 @@ function BidderHomePage() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Implement search functionality here
     console.log('Searching for:', searchTerm);
   };
 
@@ -25,7 +24,7 @@ function BidderHomePage() {
   };
 
   const handleViewHistory = () => {
-    navigate('/biddingmanagement'); // Navigate to the Bidding Management page
+    navigate('/bidhistory');
   };
 
   const handleLogout = () => {
@@ -34,6 +33,7 @@ function BidderHomePage() {
 
   return (
     <div className="bidder-homepage">
+      {/* Top bar with BidBay title and centered search */}
       <div className="top-bar">
         <h2>BidBay</h2>
         <form onSubmit={handleSearch}>
@@ -45,28 +45,26 @@ function BidderHomePage() {
           />
           <button type="submit">Search</button>
         </form>
-        <button onClick={handleLogout}>Logout</button>
       </div>
 
       <div className="content-wrapper">
+        {/* Sidebar */}
         <div className="side-bar">
-          <nav>
-            <ul>
-              <li onClick={handleViewAuctions}>View Auctions</li>
-              <li onClick={handleMyBids}>My Bids</li>
-              <li onClick={handleWatchlist}>Watchlist</li>
-            </ul>
-          </nav>
+          <ul>
+            <li onClick={handleViewAuctions}>Home</li>
+            <li onClick={handleWatchlist}>Watch Live</li>
+            <li onClick={handleViewHistory}>Bid History</li>
+            <li className="logout" onClick={handleLogout}>Logout</li>
+          </ul>
         </div>
 
+        {/* Main content */}
         <div className="main-content">
           <header>
             <h2>Welcome back Bidder!</h2>
           </header>
-
           <div className="dashboard-content">
             <p>Welcome to your Bidder Dashboard!</p>
-            {/* Add bidder-specific content here */}
           </div>
         </div>
       </div>
@@ -75,4 +73,3 @@ function BidderHomePage() {
 }
 
 export default BidderHomePage;
-

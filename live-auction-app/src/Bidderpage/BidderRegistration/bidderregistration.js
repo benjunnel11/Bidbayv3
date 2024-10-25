@@ -3,6 +3,7 @@ import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import './bidderregistration.css';
+import { IoCloseSharp } from "react-icons/io5";
 
 const BidderRegistrationPage = () => {
   const [username, setUsername] = useState('');
@@ -12,6 +13,9 @@ const BidderRegistrationPage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const onClose = () => {
+    navigate(-1);
+  };
   const handleRegistration = async (e) => {
     e.preventDefault();
     setError('');
@@ -38,7 +42,7 @@ const BidderRegistrationPage = () => {
   };
 
   return (
-    <div className="App">
+    <div className="bidder-registration">
       <div className="registration-page">
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleRegistration}>
@@ -72,6 +76,9 @@ const BidderRegistrationPage = () => {
             required
           />
           <button type="submit">Next</button>
+          <button onClick={onClose}>
+  <IoCloseSharp /> Close
+</button>
         </form>
       </div>
     </div>

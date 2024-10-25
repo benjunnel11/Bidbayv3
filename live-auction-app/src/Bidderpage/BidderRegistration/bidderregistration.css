@@ -10,14 +10,14 @@
     }
   }
   
-  .App {
-    background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
+  .bidder-registration {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(-45deg, #1a1d1e, #aeb6b8, #525152, #151616);
     background-size: 400% 400%;
     animation: gradientAnimation 20s ease infinite;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Centering the content vertically */
   }
   
   .registration-page {
@@ -25,7 +25,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(53, 61, 15);
+   background-color: rgb(101, 102, 96);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -47,7 +47,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background-color: #0d6b10;
+    background-color: #444;
     color: white;
     border: none;
     border-radius: 20px;
@@ -59,7 +59,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background-color: #f44336; /* Red color for back button */
+    background-color: #444;
     color: white;
     border: none;
     border-radius: 20px;

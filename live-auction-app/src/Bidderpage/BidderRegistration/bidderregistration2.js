@@ -3,6 +3,7 @@ import { auth, firestore } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './bidderregistration.css'; // Ensure styling is consistent
+import { IoCloseSharp } from "react-icons/io5";
 
 const BidderRegistrationPage2 = () => {
   const [firstName, setFirstName] = useState('');
@@ -16,6 +17,10 @@ const BidderRegistrationPage2 = () => {
   const uid = auth.currentUser?.uid; // Get the UID of the currently authenticated user
   const username = localStorage.getItem('username'); // Retrieve username from localStorage
   const email = localStorage.getItem('email'); // Retrieve email from localStorage
+
+  const onClose = () => {
+    navigate(-1);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +56,7 @@ const BidderRegistrationPage2 = () => {
   };
 
   return (
-    <div className="App">
+    <div className="bidder-registration">
       <div className="registration-page">
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
@@ -90,6 +95,9 @@ const BidderRegistrationPage2 = () => {
             required
           />
           <button type="submit">Submit</button>
+          <button onClick={onClose}>
+  <IoCloseSharp /> Close
+</button>
         </form>
       </div>
     </div>

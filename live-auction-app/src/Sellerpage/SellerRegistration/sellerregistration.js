@@ -3,6 +3,7 @@ import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import './sellerregistration.css';
+import { IoCloseSharp } from "react-icons/io5";
 
 const SellerRegistrationPage = () => {
   const [username, setUsername] = useState('');
@@ -12,6 +13,9 @@ const SellerRegistrationPage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const onClose = () => {
+    navigate(-1);
+  };
   const handleRegistration = async (e) => {
     e.preventDefault();
     setError('');
@@ -72,6 +76,9 @@ const SellerRegistrationPage = () => {
             required
           />
           <button type="submit">Next</button>
+          <button onClick={onClose}>
+  <IoCloseSharp /> Close
+</button>
         </form>
       </div>
     </div>

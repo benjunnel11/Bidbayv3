@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { signInWithFacebook } from '../../firebase';
 import './sellerregistration.css';
+import { IoCloseSharp } from "react-icons/io5";
 
 const SellerRegistrationPage2 = () => {
   const [firstName, setFirstName] = useState('');
@@ -19,6 +20,9 @@ const SellerRegistrationPage2 = () => {
   const username = localStorage.getItem('username'); // Retrieve username from localStorage
   const email = localStorage.getItem('email'); // Retrieve email from localStorage
 
+  const onClose = () => {
+    navigate(-1);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -92,6 +96,9 @@ const SellerRegistrationPage2 = () => {
             required
           />
           <button type="submit">Submit</button>
+          <button onClick={onClose}>
+  <IoCloseSharp /> Close
+</button>
         </form>
       </div>
     </div>

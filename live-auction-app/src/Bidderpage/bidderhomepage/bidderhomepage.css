@@ -21,10 +21,12 @@
   padding: 10px 20px;
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
+  height: 50px;
   width: 100%;
 }
 
 .top-bar h2 {
+  top: 50px;
   color: white;
   margin: 0;
 }
@@ -54,11 +56,24 @@
 
 .content-wrapper {
   display: flex;
+  top: 50px;
   flex: 1;
+}
+
+.content-container {
+  position: absolute;
+  top: 50px;
+  left: 230px;
+  right: 10px;
+  bottom: 60px;
+  width: fit-content;
+  height: fit-content;
 }
 
 .side-bar {
   width: 200px;
+  height: 90vh;
+  top: 70px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   position: relative;
@@ -101,6 +116,7 @@
 }
 
 .main-content {
+  margin-top: 50px;
   flex: 1;
   padding: 20px;
   color: white;

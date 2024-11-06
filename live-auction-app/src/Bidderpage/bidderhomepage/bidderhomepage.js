@@ -1,39 +1,59 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './bidderhomepage.css';
+import EWalletManagement from '../../E-WalletManagement/Wallet';
+import Sidebar from './Sidebar';
+
 
 function BidderHomePage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentContent, setCurrentContent] = useState('dashboard');
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log('Searching for:', searchTerm);
+  const handleSearch = () => {
+      setSearchTerm('search');
   };
 
   const handleViewAuctions = () => {
     navigate('/viewauctions');
   };
 
-  const handleMyBids = () => {
-    navigate('/mybids');
-  };
+    const handleViewProfile = () => {
+      navigate('/profile');
+    };
 
   const handleWatchlist = () => {
     navigate('/watchlist');
+  };
+
+  const handleWallet = () => {
+    setCurrentContent('wallet');
   };
 
   const handleViewHistory = () => {
     navigate('/bidhistory');
   };
 
-  const handleLogout = () => {
-    navigate('/login');
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
   };
+
+const handleLogoutConfirm = () => {
+    setShowLogoutModal(false);
+    navigate('/login');
+};
+
+const handleLogoutCancel = () => {
+    setShowLogoutModal(false);
+};
 
   return (
     <div className="bidder-homepage">
-      {/* Top bar with BidBay title and centered search */}
+      <Sidebar 
+            onWalletClick={handleWallet}
+            onLogoutClick={handleLogoutClick}
+        />
       <div className="top-bar">
         <h2>BidBay</h2>
         <form onSubmit={handleSearch}>
@@ -46,28 +66,23 @@ function BidderHomePage() {
           <button type="submit">Search</button>
         </form>
       </div>
-
-      <div className="content-wrapper">
-        {/* Sidebar */}
-        <div className="side-bar">
-          <ul>
-            <li onClick={handleViewAuctions}>Home</li>
-            <li onClick={handleWatchlist}>Watch Live</li>
-            <li onClick={handleViewHistory}>Bid History</li>
-            <li className="logout" onClick={handleLogout}>Logout</li>
-          </ul>
-        </div>
-
-        {/* Main content */}
-        <div className="main-content">
-          <header>
-            <h2>Welcome back Bidder!</h2>
-          </header>
-          <div className="dashboard-content">
-            <p>Welcome to your Bidder Dashboard!</p>
-          </div>
-        </div>
-      </div>
+          <div className="content-container">
+            <div className="main-content">            
+                          {currentContent === 'wallet' && <EWalletManagement />}
+                    </div>
+                  </div>
+      {showLogoutModal && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h3>Confirm Logout</h3>
+                        <p>Are you sure you want to quit?</p>
+                        <div className="modal-buttons">
+                            <button onClick={handleLogoutConfirm}>Yes, Logout</button>
+                            <button onClick={handleLogoutCancel}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
     </div>
   );
 }

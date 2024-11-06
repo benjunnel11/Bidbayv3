@@ -10,7 +10,8 @@ import BidderRegistrationPage from './Bidderpage/BidderRegistration/bidderregist
 import BidderRegistrationPage2 from './Bidderpage/BidderRegistration/bidderregistration2';
 import SellerHomePage from './Sellerpage/sellerhomepage/sellerhomepage';
 import BidderHomePage from './Bidderpage/bidderhomepage/bidderhomepage';
-import BiddingManagement from './BiddingManagement/biddingmanagement'; // Import BiddingManagement
+import BiddingManagement from './BiddingManagement/biddingmanagement'; 
+import EWalletManagement from './E-WalletManagement/Wallet';
 import './App.css';
 
 function App() {
@@ -43,6 +44,7 @@ const MainAdminContent = () => {
         <Routes>
           <Route exact path='/' element={<Homepage/>}/>
           <Route path="livemanagement" element={<LiveManagement />} />
+          <Route path="e-wallet" element={<EWalletManagement/>} />
         </Routes>
       </div>
     </div>

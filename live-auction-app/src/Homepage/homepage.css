@@ -1,23 +1,3 @@
-body, .App {
-  font-family: 'Avenir', sans-serif;
-}
-
-h1 {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
-  height: 300px;
-  font-size: 2.5rem;
-  color: #67652f;
-  letter-spacing: 1px;
-  text-align: center;
-  margin-bottom: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-}
-
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
@@ -34,295 +14,134 @@ h1 {
   background: linear-gradient(-45deg, #1a1d1e, #aeb6b8, #525152, #151616);
   background-size: 400% 400%;
   animation: gradientAnimation 15s ease infinite;
-  min-height: 100vh;
-}
-/* Rest of the CSS remains the same */
-
-nav {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-}
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
+  height: 100%;
+  width: 100%;
   margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
 }
+  .top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+  }
 
-nav ul li {
-  margin-right: 100px;
-}
+  .Homepage .top-bar .nav-left ul {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding-right: 20px;
+  }
 
-nav ul li:last-child {
-  margin-right: 0;
-}
+  @media screen and (max-width: 768px) {
+    .top-bar {
+      padding: 10px 15px;
+    }
 
+    .Homepage .top-bar .nav-left ul {
+      gap: 15px;
+      padding-right: 10px;
+    }
 
-nav ul li a[data-tooltip] {
-  position: relative;
-}
+    .Homepage .top-bar .nav-left a {
+      font-size: 14px;
+    }
 
-nav ul li a[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  top: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(32, 41, 20, 0.833);
-  color: white;
-  padding: 15px;
-  border-radius: 10px;
-  width: 250px;
-  text-align: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  z-index: 1000;
-  white-space: nowrap;
-  font-size: 1.1em;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+    .login-btn {
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+  }
 
-nav ul li a[data-tooltip]:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) scale(1.1);
-}
+  @media screen and (max-width: 480px) {
+    .Homepage .top-bar .nav-left ul {
+      gap: 10px;
+    }
 
-nav ul li a[data-tooltip]::after {
-  content: attr(data-tooltip);
-  width: 300px;
-  white-space: normal;
-  line-height: 1.4;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-
-nav ul li a[data-tooltip]:hover::after {
-  opacity: 1;
-}
-
-nav ul li a[data-tooltip="Home"] {
-  transition: all 0.3s ease;
-}
-
-nav ul li a[data-tooltip="Home"]:hover {
-  transform: scale(1.2);
-  padding: 15px 20px;
-  background-color: #282b11;
-  border-radius: 20px;
-}
-
-nav ul li a[data-tooltip="About"] {
-  transition: all 0.3s ease;
-}
-
-nav ul li a[data-tooltip="About"]:hover {
-  transform: scale(1.2);
-  padding: 15px 20px;
-  background-color: #282b11;
-  border-radius: 20px;
-}
-
-nav ul li a[data-tooltip="Contact"] {
-  transition: all 0.3s ease;
-}
-
-nav ul li a[data-tooltip="Contact"]:hover {
-  transform: scale(1.2);
-  padding: 15px 20px;
-  background-color: #282b11;
-  border-radius: 20px;
-}
-
-
-
-
-
-
-
-a{
+    .Homepage .top-bar .nav-left a {
+      font-size: 12px;
+    }
+  }
+.Homepage .top-bar .nav-left a {
   color: white;
   text-decoration: none;
-  border-radius: 20px;
-  padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
-  font-family:monospace;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  transition: all 0.3s ease;
 }
 
+.Homepage .top-bar .nav-left a:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
 
-nav ul li {
-  display: inline-block;
-  margin-left: 20px;  /* Increased margin for more space between buttons */
+.nav-right {
+  display: flex;
+  margin-left: auto;
+  padding-right: 75px;
+}
+
+.login-btn {
+  color: white;
+  background-color: rgba(19, 52, 8, 0.6);
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  float: right;
+}
+
+.login-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+.welcome-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-container h1 {
+  color: white;
+  font-size: 3rem;
+  text-align: center;
 }
 
 .choose-role-btn {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1.10rem;
-  font-weight: 400;
-  color: #ffffff;
-  background-color: rgba(19, 52, 8, 0.2);
-  border: none;
-  border-radius: 25px;
-  padding: 15px 30px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translateX(-50%);
+font-family: 'Helvetica Neue', Arial, sans-serif;
+font-size: 1.10rem;
+font-weight: 400;
+color: #ffffff;
+background-color: rgba(19, 52, 8, 0.2);
+border: none;
+border-radius: 25px;
+padding: 15px 30px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+position: absolute;
+top: 60%;
+left: 50%;
+transform: translateX(-50%);
 }
 
 .choose-role-btn:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-.search-bar input {
-  padding: 10px;
-  border-radius: 30px 0 0 40px;
-  border: none;
-  outline: none;
-}
-
-.search-bar button {
-  padding: 10px 15px;
-  border-radius: 0 20px 20px 0;
-  border: none;
-  background-color: #0d6b10;
-  color: white;
-  cursor: pointer;
-}
-
-.search-bar button:hover {
-  background-color: #45a049;
-}
-.role-box {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(83, 97, 7);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  z-index: 1000;
-  width: 300px;
-  text-align: center;
-}
-
-.role-box h2 {
-  margin-bottom: 30px;
-  color:white;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-}
-
-.role-box button {
-  display: block;
-  width: 80%;
-  padding: 15px;
-  margin: 0 auto 20px;
-  background-color: #0d6b10;
-  color: white;
-  border: none;
-  border-radius: 40px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.role-box button:last-child {
-  margin-bottom: 0;
-}
-
-.role-box button:hover {
-  background-color: #45a049;
-}
-
-.login-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(53, 61, 15);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  z-index: 1000;
-  width: 300px;
-  height: 400px; /* Adjust this value as needed */
-}
-
-.login-page input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid rgb(53, 61, 15);
-  border-radius: 20px;
-}
-
-.login-page button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #0d6b10;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.login-page button:hover {
-  background-color: #45a049;
-}
-
-h2{
-  color: white;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-}
-
-
-.registration-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(53, 61 , 15);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  z-index: 1000;
-  width: 300px;
-  height: 600px; /* Adjust this value as needed */
-  text-align: center;
-}
-
-.registration-page input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #55790f;
-  border-radius: 20px;
-}
-
-.registration-page button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #0d6b10;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
+background-color: rgba(255, 255, 255, 0.3);
 }

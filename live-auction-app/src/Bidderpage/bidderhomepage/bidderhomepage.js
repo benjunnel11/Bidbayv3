@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './bidderhomepage.css';
 import EWalletManagement from '../../E-WalletManagement/Wallet';
 import Sidebar from './Sidebar';
+import { auth, firestore, storage } from '../../firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 
 function BidderHomePage() {
@@ -10,6 +12,38 @@ function BidderHomePage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentContent, setCurrentContent] = useState('dashboard');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [profilePictureURL, setProfilePictureURL] = useState('');
+  const [userName, setUserName] = useState();
+  const [userEmail, setUserEmail] = useState();
+  const [profilePicture, setProfilePicture] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetchUserProfile(user.uid); // Fetch user profile
+      }
+    });
+
+    return () => unsubscribe(); // Clean up the listener on unmount
+  }, []);
+
+  const fetchUserProfile = async (uid) => {
+    try {
+      const userDoc = doc(firestore, 'userBidder', uid);
+      const userSnap = await getDoc(userDoc);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        setUserName(userData.firstName); // Set username
+        setUserEmail(userData.email); // Set email
+        setProfilePictureURL(userData.profilePicture); // Set profile picture URL
+      } else {
+        console.error("No user data found.");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   const handleSearch = () => {
       setSearchTerm('search');
@@ -48,8 +82,19 @@ const handleLogoutCancel = () => {
     setShowLogoutModal(false);
 };
 
+
+const handleProfileManagement = () => {
+  navigate('/profilemanagement');
+};
   return (
     <div className="bidder-homepage">
+<div className="profile-container" onClick={handleProfileManagement}>
+        <h3>{userName}</h3>
+    <div className="profile-image">
+    <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
+  </div>
+</div>
+
       <Sidebar 
             onWalletClick={handleWallet}
             onLogoutClick={handleLogoutClick}

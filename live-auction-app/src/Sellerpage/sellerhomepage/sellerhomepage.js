@@ -95,7 +95,7 @@ function SellerHomePage() {
         const userData = userSnap.data();
         setUserName(userData.firstName); // Set username
         setUserEmail(userData.email); // Set email
-        setProfilePictureURL(userData.profilePicture || 'default-avatar.png'); // Set profile picture URL
+        setProfilePictureURL(userData.profilePicture); // Set profile picture URL
       } else {
         console.error("No user data found.");
       }

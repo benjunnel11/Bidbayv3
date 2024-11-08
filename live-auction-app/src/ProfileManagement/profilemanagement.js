@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { auth, firestore, storage } from '../firebase'; // Ensure correct import paths
+import { auth, firestore, storage } from '../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import './profilemanagement.css'; // Import the CSS file
+import './profilemanagement.css';
 import { useNavigate } from 'react-router-dom';
 
-function ProfileManagement() {
+function ProfileManagement({ profileType }) {
   const navigate = useNavigate();
-
-  // State to hold user profile information
   const [profile, setProfile] = useState({
     firstName: '',
     lastName: '',
@@ -16,56 +14,55 @@ function ProfileManagement() {
     phone: '',
     address: ''
   });
-
-  // State to manage profile picture
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePictureURL, setProfilePictureURL] = useState('');
-
-  // State to manage loading and saving states
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  // State to track user authentication status
   const [user, setUser] = useState(null);
+  const [userType, setUserType] = useState('');
 
   const onClose = () => {
     navigate(-1);
   };
 
-  // Listen to authentication state change
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setUser(user); // Store the logged-in user
-        fetchUserProfile(user.uid); // Fetch profile data
+        setUser(user);
+        fetchUserProfile(user.uid);
       } else {
-        setUser(null); // User is logged out
-        setProfile({ firstName: '', lastName: '', email: '', phone: '', address: '' });
-        setProfilePictureURL(''); // Reset profile data on logout
+        setUser(null);
+        resetProfile();
       }
     });
 
-    return () => unsubscribe(); // Clean up the listener on unmount
+    return () => unsubscribe();
   }, []);
 
-  // Fetch user profile data from Firestore
+  const resetProfile = () => {
+    setProfile({ firstName: '', lastName: '', email: '', phone: '', address: '' });
+    setProfilePictureURL('');
+  };
+
   const fetchUserProfile = async (uid) => {
     try {
-      const userDoc = doc(firestore, 'userSeller', uid);
-      const userSnap = await getDoc(userDoc);
+      // Check in 'userSeller' collection first
+      const sellerDoc = doc(firestore, 'userSeller', uid);
+      const sellerSnap = await getDoc(sellerDoc);
+      if (sellerSnap.exists()) {
+        setUserType('userSeller');
+        populateProfile(sellerSnap.data());
+        return;
+      }
 
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        setProfile({
-          firstName: userData.firstName || '',
-          lastName: userData.lastName || '',
-          email: userData.email || '',
-          phone: userData.phone || '',
-          address: userData.address || ''
-        });
-        setProfilePictureURL(userData.profilePicture || '');
+      // If not in 'userSeller', check 'userBidder'
+      const bidderDoc = doc(firestore, 'userBidder', uid);
+      const bidderSnap = await getDoc(bidderDoc);
+      if (bidderSnap.exists()) {
+        setUserType('userBidder');
+        populateProfile(bidderSnap.data());
       } else {
-        console.error("No user data found.");
+        console.error("User profile not found in either collection.");
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -74,7 +71,17 @@ function ProfileManagement() {
     }
   };
 
-  // Handle changes in input fields
+  const populateProfile = (userData) => {
+    setProfile({
+      firstName: userData.firstName || '',
+      lastName: userData.lastName || '',
+      email: userData.email || '',
+      phone: userData.phone || '',
+      address: userData.address || ''
+    });
+    setProfilePictureURL(userData.profilePicture || '');
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({
@@ -83,13 +90,11 @@ function ProfileManagement() {
     }));
   };
 
-  // Handle file selection for profile picture
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) setProfilePicture(file);
   };
 
-  // Handle profile picture upload to Firebase Storage
   const handleUploadPicture = async () => {
     if (!profilePicture || !user) {
       alert("Please select a profile picture to upload.");
@@ -100,7 +105,7 @@ function ProfileManagement() {
       const storageRef = ref(storage, `profilePictures/${user.uid}/${profilePicture.name}`);
       await uploadBytes(storageRef, profilePicture);
       const downloadURL = await getDownloadURL(storageRef);
-      await updateDoc(doc(firestore, 'userSeller', user.uid), { profilePicture: downloadURL });
+      await updateDoc(doc(firestore, userType, user.uid), { profilePicture: downloadURL });
       setProfilePictureURL(downloadURL);
       alert("Profile picture uploaded successfully!");
     } catch (error) {
@@ -109,17 +114,16 @@ function ProfileManagement() {
     }
   };
 
-  // Handle saving changes to Firestore
   const handleSaveChanges = async () => {
-    if (!user) {
-      alert("User is not authenticated.");
+    if (!user || !userType) {
+      alert("User is not authenticated or user type is not set.");
       return;
     }
 
     setIsSaving(true);
 
     try {
-      const userDoc = doc(firestore, 'userSeller', user.uid);
+      const userDoc = doc(firestore, userType, user.uid);
       await updateDoc(userDoc, {
         ...profile,
         profilePicture: profilePictureURL
@@ -133,14 +137,13 @@ function ProfileManagement() {
     }
   };
 
-  // Show loading state while fetching data
   if (isLoading) {
     return <div className="loading">Loading profile data...</div>;
   }
 
   return (
     <div className="profile-management-container">
-      <h2>Profile Management</h2>
+      <h2>{userType === 'userBidder' ? 'Bidder Profile Management' : 'Seller Profile Management'}</h2>
 
       <div className="profile-picture-container">
         <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" className="profile-picture" />
@@ -201,7 +204,7 @@ function ProfileManagement() {
         <button className="save-button" onClick={handleSaveChanges} disabled={isSaving}>
           {isSaving ? 'Saving...' : 'Save Changes'}
         </button>
-                <button className="save-button" onClick={onClose} disabled={isSaving}>
+        <button className="save-button" onClick={onClose} disabled={isSaving}>
           {isSaving ? 'Going Back...' : 'Back to Homepage'}
         </button>
       </div>

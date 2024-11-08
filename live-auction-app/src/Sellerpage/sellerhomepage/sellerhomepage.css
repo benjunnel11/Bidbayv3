@@ -169,22 +169,43 @@
   background-color: #e0e0e0;
   border-radius: 50%;
 }
-
 .profile-container {
   position: fixed;
   top: 10px;
   right: 20px;
   display: flex;
   align-items: center;
-  z-index: 3;
-  cursor: pointer;
+  cursor: pointer; 
   padding: 8px 15px;
   border-radius: 25px;
   background-color: rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
+  z-index: 10;
+}
+.profile-container1 {
+  top: 10px;
+  left:auto;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer; 
+  padding: 8px 15px;
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  z-index: 10;
 }
 
 .profile-container:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.profile-image {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+.h3:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
@@ -198,10 +219,10 @@
   order: 2;
   border: 2px solid #ffffff;
   transition: transform 0.3s ease;
-  cursor: pointer;
+  cursor: inherit;
 }
 
-.profile-container:hover .profile-image {
+.profile-container:hover .profile-image .h3 {
   transform: scale(1.1);
 }
 
@@ -211,40 +232,11 @@
   margin: 0;
   order: 1;
   font-weight: 500;
+  cursor: inherit;
 }
 
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  background-color: rgb(54, 55, 50);
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
-}
 .h3{
  color: white;
-}
-
-.modal-buttons {
-  margin-top: 20px;
-}
-
-.modal-buttons button {
-  margin: 0 10px;
-  padding: 5px 10px;
-  border-radius: 10px;
-  color:#677a11
 }
 
 .dashboard-button svg {
@@ -430,10 +422,12 @@
   object-fit: cover;
   background-size: cover;
   background-position: center;
+  cursor: inherit;
 }
 
 .profile-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  cursor: inherit;
 }

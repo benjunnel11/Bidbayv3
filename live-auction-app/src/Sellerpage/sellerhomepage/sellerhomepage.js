@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './sellerhomepage.css';
-import { FaVideo } from "react-icons/fa";
+import { FaVideo, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
-import { FaShoppingCart } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
-import { FaSignOutAlt } from "react-icons/fa";
+import { auth, firestore, storage } from '../../firebase'; // Ensure correct import paths
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 function SellerHomePage() {
   const navigate = useNavigate();
@@ -13,10 +13,11 @@ function SellerHomePage() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stream, setStream] = useState(null);
-  const [userName, setUserName] = useState("John Doe"); // Example default value
-  const [userEmail, setUserEmail] = useState("john@example.com"); // Example default value
+  const [userName, setUserName] = useState();
+  const [userEmail, setUserEmail] = useState();
   const [profilePicture, setProfilePicture] = useState(null);
   const webcamContainerRef = useRef(null);
+  const [profilePictureURL, setProfilePictureURL] = useState('');
 
   const handleStopLive = () => {
     if (stream) {
@@ -45,7 +46,6 @@ function SellerHomePage() {
     setUserName(userName);
     setIsModalOpen(false);
   };
-
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -76,6 +76,34 @@ function SellerHomePage() {
     }
   }, [stream]);
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetchUserProfile(user.uid); // Fetch user profile
+      }
+    });
+
+    return () => unsubscribe(); // Clean up the listener on unmount
+  }, []);
+
+  const fetchUserProfile = async (uid) => {
+    try {
+      const userDoc = doc(firestore, 'userSeller', uid);
+      const userSnap = await getDoc(userDoc);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        setUserName(userData.firstName); // Set username
+        setUserEmail(userData.email); // Set email
+        setProfilePictureURL(userData.profilePicture || 'default-avatar.png'); // Set profile picture URL
+      } else {
+        console.error("No user data found.");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
@@ -90,6 +118,10 @@ function SellerHomePage() {
 
   const handleViewSales = () => {
     navigate('/salesanalytics');
+  };
+
+  const handleProfileManagement = () => {
+    navigate('/profilemanagement');
   };
 
   const handleLogoutClick = () => {
@@ -108,13 +140,13 @@ function SellerHomePage() {
   return (
     <div className="App">
       <div className="seller-homepage">
-      <div className="profile-container" onClick={toggleModal}>
-  <h3>{userName}</h3>
-  <div className="profile-image">
-    <img src={profilePicture || 'default-avatar.png'} alt="Profile" />
+        {/* Profile Container */}
+        <div className="profile-container" onClick={handleProfileManagement}>
+        <h3>{userName}</h3>
+    <div className="profile-image">
+    <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
   </div>
 </div>
-
 
         <div className={`nav-toggle ${isNavOpen ? 'open' : ''}`} onClick={toggleNav}>
           <span></span>
@@ -123,7 +155,7 @@ function SellerHomePage() {
         </div>
 
         <nav className={`side-nav ${isNavOpen ? 'open' : ''}`}>
-          <button className="dashboard-button" onClick={handleAddNewItem}><IoMdAdd />Add new Item</button>
+          <button className="dashboard-button" onClick={handleAddNewItem}><IoMdAdd /> Add new Item</button>
           <button className="dashboard-button" onClick={handleViewItems}>
             <FaShoppingCart /> View My Items
           </button>
@@ -170,56 +202,6 @@ function SellerHomePage() {
             </div>
           </div>
         )}
-
-<div className={`profile-modal-overlay ${isModalOpen ? 'show' : ''}`}>
-  <div className="profile-modal">
-    <h2>Edit Profile</h2>
-    <form className="profile-edit-form" onSubmit={handleFormSubmit}>
-    <div className="profile-picture-upload">
-  <img 
-    src={profilePicture || 'default-avatar.png'} 
-    alt="Profile" 
-    className="profile-picture-preview"
-  />
-  <input 
-    type="file" 
-    accept="image/*" 
-    id="profile-upload" 
-    hidden 
-    onChange={handleFileChange}
-  />
-  <button type="button" className="upload-button" onClick={handleUploadClick}>
-    Upload New Picture
-  </button>
-</div>
-      
-      <input 
-        type="text" 
-        className="form-input" 
-        placeholder="Full Name" 
-        value={userName} 
-        onChange={(e) => setUserName(e.target.value)}
-      />
-      
-      <input 
-        type="email" 
-        className="form-input" 
-        placeholder="Email" 
-        value={userEmail} 
-        onChange={(e) => setUserEmail(e.target.value)}
-      />
-      
-      <div className="form-actions">
-        <button type="button" className="cancel-button" onClick={toggleModal}>
-          Cancel
-        </button>
-        <button type="submit" className="save-button">
-          Save Changes
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
       </div>
     </div>
   );

@@ -5,6 +5,9 @@ import EWalletManagement from '../../E-WalletManagement/Wallet';
 import Sidebar from './Sidebar';
 import { auth, firestore, storage } from '../../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import BidBayLogo from '../../image/Bidbay.png';
+
+
 
 
 function BidderHomePage() {
@@ -100,17 +103,26 @@ const handleProfileManagement = () => {
             onLogoutClick={handleLogoutClick}
         />
       <div className="top-bar">
-        <h2>BidBay</h2>
-        <form onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Search auctions..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button type="submit">Search</button>
-        </form>
-      </div>
+  <div className="logo-container">
+    <img 
+      src={BidBayLogo}
+      alt="BidBay Logo" 
+      className="logo" 
+      onClick={() => navigate('/')} 
+      style={{ cursor: 'pointer' }}
+    />
+  </div>
+  <form onSubmit={handleSearch}>
+    <input
+      type="text"
+      placeholder="Search auctions..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+    <button type="submit">Search</button>
+  </form>
+</div>
+
           <div className="content-container">
             <div className="main-content">            
                           {currentContent === 'wallet' && <EWalletManagement />}

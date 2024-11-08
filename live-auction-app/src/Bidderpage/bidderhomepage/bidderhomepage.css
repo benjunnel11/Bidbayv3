@@ -21,10 +21,12 @@
   padding: 10px 20px;
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
+  height: 50px;
   width: 100%;
 }
 
 .top-bar h2 {
+  top: 50px;
   color: white;
   margin: 0;
 }
@@ -54,11 +56,24 @@
 
 .content-wrapper {
   display: flex;
+  top: 50px;
   flex: 1;
+}
+
+.content-container {
+  position: absolute;
+  top: 50px;
+  left: 230px;
+  right: 10px;
+  bottom: 60px;
+  width: fit-content;
+  height: fit-content;
 }
 
 .side-bar {
   width: 200px;
+  height: 90vh;
+  top: 70px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   position: relative;
@@ -101,6 +116,7 @@
 }
 
 .main-content {
+  margin-top: 50px;
   flex: 1;
   padding: 20px;
   color: white;
@@ -115,4 +131,83 @@
   padding: 20px;
   border-radius: 5px;
   min-height: 300px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  text-align: center;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.modal h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.modal p {
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-buttons button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-buttons button:first-child {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.modal-buttons button:first-child:hover {
+  background-color: #c0392b;
+}
+
+.modal-buttons button:last-child {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #bdc3c7;
 }

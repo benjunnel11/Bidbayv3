@@ -2,10 +2,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from 'firebase/firestore';
-import { getAuth, FacebookAuthProvider, signInWithPopup,fetchSignInMethodsForEmail } from 'firebase/auth';
+import { getAuth, FacebookAuthProvider, GoogleAuthProvider, signInWithPopup, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
-
-
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,18 +16,6 @@ const firebaseConfig = {
     measurementId: "G-59EN630QV7"
 };
 
-const checkSignInMethods = async (email) => {
-    try {
-        const methods = await fetchSignInMethodsForEmail(auth, email);
-        console.log('Sign-in methods:', methods);
-    } catch (error) {
-        console.error('Error fetching sign-in methods:', error);
-    }
-};
-
-const fbAuthProvider = new FacebookAuthProvider();
-fbAuthProvider.addScope('email'); // Ensure email permission is requested
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app); // Optional: only if you need analytics
@@ -41,11 +27,38 @@ const firestore = getFirestore(app);
 // Initialize Storage
 const storage = getStorage(app);
 
+// Facebook Auth Provider
+const fbAuthProvider = new FacebookAuthProvider();
+fbAuthProvider.addScope('email'); // Ensure email permission is requested
 
+// Google Auth Provider
+const googleAuthProvider = new GoogleAuthProvider();
 
-// Export Firestore and Auth for use in other files
-export { auth, firestore, storage, checkSignInMethods};
+// Google Sign-In function
+const signInWithGoogle = async () => {
+    try {
+        const result = await signInWithPopup(auth, googleAuthProvider);
+        return result; // Return the result directly
+    } catch (error) {
+        console.error("Error during Google login:", error);
+        throw error; // Rethrow the error to handle it in the calling function
+    }
+};
 
+// Check sign-in methods for email
+const checkSignInMethods = async (email) => {
+    try {
+        const methods = await fetchSignInMethodsForEmail(auth, email);
+        console.log('Sign-in methods:', methods);
+    } catch (error) {
+        console.error('Error fetching sign-in methods:', error);
+    }
+};
+
+// Export Firebase services and functions for use in other files
+export { auth, firestore, storage, checkSignInMethods, signInWithGoogle };
+
+// Facebook Sign-In function
 export const signInWithFacebook = async () => {
     try {
         const result = await signInWithPopup(auth, fbAuthProvider);

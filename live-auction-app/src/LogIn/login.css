@@ -10,6 +10,7 @@
     background-position: 0% 50%;
   }
 }
+
 .icon-button {
   display: flex;
   align-items: center;
@@ -20,8 +21,6 @@
 .icon-button svg {
   font-size: 18px;
 }
-
-
 
 .App {
   background: linear-gradient(-45deg, #696f2f, #222009, #949435, #716610);
@@ -42,13 +41,12 @@
   position: relative;
 }
 
-/* Toggle Panel Styles */
 .toggle-panel {
   display: flex;
   justify-content: space-around;
   background-color: rgb(39, 41, 32); /* Dark purple color */
   padding: 10px;
-  border-bottom: 1px solid #ddd; /* Separator */
+  border-bottom: 1px solid #ddd;
 }
 
 .toggle-button {
@@ -57,19 +55,18 @@
   cursor: pointer;
   border: none;
   color: white;
-  background-color: #253826; /* Match background color */
+  background-color: #253826;
   transition: background-color 0.3s;
 }
 
 .toggle-button:hover {
-  background-color: #042c0d;; /* Lighter purple on hover */
+  background-color: #042c0d;
 }
 
 .toggle-button.active {
-  background-color: #240224;; /* Highlight active button */
+  background-color: #240224;
 }
 
-/* Form Container */
 .form-container {
   padding: 30px;
   display: flex;
@@ -84,12 +81,6 @@
   flex-direction: column;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
-}
-
-/* Remove the following as it's incorrect and causing errors */
-.login-form.hidden {
-  opacity: 0;
-  visibility: hidden;
 }
 
 .login-form h2 {
@@ -122,3 +113,31 @@
   background-color: #000000;
 }
 
+/* Google Button Styling */
+/* Google Button Styling */
+/* Google Button Styling */
+.google-button {
+  background-color: #4285F4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-family: inherit; /* Ensure font family matches other buttons */
+}
+
+.google-button svg {
+  margin-right: 8px; /* Add space between icon and text */
+  font-size: 18px; /* Match the icon size with Facebook icon */
+}
+
+.google-button:hover {
+  background-color: #357AE8;
+}

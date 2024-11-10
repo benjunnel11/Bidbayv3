@@ -4,12 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase'; 
 import { signInWithEmailAndPassword, fetchSignInMethodsForEmail } from 'firebase/auth'; // Import fetchSignInMethodsForEmail
 import { signInWithFacebook } from '../firebase';
+import { signInWithGoogle } from '../firebase'; // Import Google login method
 import { firestore } from '../firebase';
 import { setDoc, getDoc, doc } from 'firebase/firestore';
 import { FaFacebook } from "react-icons/fa6";
+import { FaGoogle } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
+
 
 function LoginPage() {
   const [isBidderLogin, setIsBidderLogin] = useState(false);
@@ -124,6 +127,57 @@ function LoginPage() {
     }
   };
 
+  // Handle Google Login for Seller
+  const handleGoogleLoginseller = async () => {
+    try {
+      const result = await signInWithGoogle(); // Assume signInWithGoogle() is implemented
+      const user = result.user;
+
+      if (user) {
+        const { displayName, email, uid } = user;
+
+        const userDoc = doc(firestore, 'userSeller', uid);
+        const userSnap = await getDoc(userDoc);
+
+        if (!userSnap.exists()) {
+          await setDoc(userDoc, {
+            username: displayName?.split(" ")[0] || '',
+            email: email || '',
+            firstName: displayName?.split(" ")[0] || '',
+            lastName: displayName?.split(" ")[1] || '',
+            provider: 'google',
+          });
+          navigate('/sellerregistration2');
+        } else {
+          navigate('/sellerhomepage');
+        }
+      } else {
+        throw new Error("No user data returned from Google login");
+      }
+    } catch (error) {
+      console.error('Error during Google login:', error);
+      setError(error.message || 'An unknown error occurred during Google login.');
+    }
+  };
+
+  // Handle Google Login for Bidder
+  const handleGoogleLoginbidder = async () => {
+    try {
+      const result = await signInWithGoogle(); 
+
+      if (result.user) {
+        console.log('Google login successful for Bidder');
+        navigate('/bidderhomepage');
+      } else {
+        console.error('Google login was not successful');
+        setError('Google login failed');
+      }
+    } catch (error) {
+      console.error('Error during Google login:', error);
+      setError(error.message);
+    }
+  };
+
   // Close the login page
   const onClose = () => {
     navigate(-1);
@@ -168,22 +222,22 @@ function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-             <button onClick={handleLogin} className="icon-button">
-  <FiLogIn /> Login
-</button>
+              <button onClick={handleLogin} className="icon-button">
+                <FiLogIn /> Login
+              </button>
+              <button onClick={onSellerRegister} className="icon-button">
+                <FaUser /> Register as Seller
+              </button>
+              <button onClick={handleFacebookLoginseller} className="icon-button">
+                <FaFacebook /> Login with Facebook
+              </button>
+              <button onClick={handleGoogleLoginseller} className="google-button">
+              <FaGoogle /> Login with Google
+              </button>
 
-<button onClick={onSellerRegister} className="icon-button">
-  <FaUser /> Register as Seller
-</button>
-
-<button onClick={handleFacebookLoginseller} className="icon-button">
-  <FaFacebook /> Login with Facebook
-</button>
-
-<button onClick={onClose} className="icon-button">
-  <IoCloseSharp /> Close
-</button>
-
+              <button onClick={onClose} className="icon-button">
+                <IoCloseSharp /> Close
+              </button>
             </div>
           ) : (
             <div className="login-form bidder-login-form">
@@ -201,21 +255,21 @@ function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button onClick={handleLogin} className="icon-button">
-  <FiLogIn /> Login
-</button>
+                <FiLogIn /> Login
+              </button>
+              <button onClick={onBidderRegister} className="icon-button">
+                <FaUser /> Register as Bidder
+              </button>
+              <button onClick={handleFacebookLoginbidder} className="icon-button">
+                <FaFacebook /> Login with Facebook
+              </button>
+              <button onClick={handleGoogleLoginbidder} className="icon-button google-button">
+              <FaGoogle /> Login with Google
+              </button>
 
-<button onClick={onBidderRegister} className="icon-button">
-  <FaUser /> Register as Bidder
-</button>
-
-<button onClick={handleFacebookLoginbidder} className="icon-button">
-  <FaFacebook /> Login with Facebook
-</button>
-
-<button onClick={onClose} className="icon-button">
-  <IoCloseSharp /> Close
-</button>
-
+              <button onClick={onClose} className="icon-button">
+                <IoCloseSharp /> Close
+              </button>
             </div>
           )}
         </div>

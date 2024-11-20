@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Bidbayv3/static/css/main.9a867f52.css",
-    "main.js": "/Bidbayv3/static/js/main.92e68ed7.js",
+    "main.css": "/Bidbayv3/static/css/main.dbd5e941.css",
+    "main.js": "/Bidbayv3/static/js/main.6d47a8bf.js",
     "static/js/453.0d4cc6f9.chunk.js": "/Bidbayv3/static/js/453.0d4cc6f9.chunk.js",
     "index.html": "/Bidbayv3/index.html",
-    "main.9a867f52.css.map": "/Bidbayv3/static/css/main.9a867f52.css.map",
-    "main.92e68ed7.js.map": "/Bidbayv3/static/js/main.92e68ed7.js.map",
+    "main.dbd5e941.css.map": "/Bidbayv3/static/css/main.dbd5e941.css.map",
+    "main.6d47a8bf.js.map": "/Bidbayv3/static/js/main.6d47a8bf.js.map",
     "453.0d4cc6f9.chunk.js.map": "/Bidbayv3/static/js/453.0d4cc6f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9a867f52.css",
-    "static/js/main.92e68ed7.js"
+    "static/css/main.dbd5e941.css",
+    "static/js/main.6d47a8bf.js"
   ]
 }

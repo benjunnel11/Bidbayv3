@@ -1,14 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './bidderhomepage.css';
 import EWalletManagement from '../../E-WalletManagement/Wallet';
 import Sidebar from './Sidebar';
-import { auth, firestore, storage } from '../../firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { auth, firestore } from '../../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import BidBayLogo from '../../image/Bidbay.png';
-
-
-
 
 function BidderHomePage() {
   const navigate = useNavigate();
@@ -19,6 +16,9 @@ function BidderHomePage() {
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
   const [profilePicture, setProfilePicture] = useState(null);
+
+  // New state to manage sidebar visibility
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -48,17 +48,27 @@ function BidderHomePage() {
     }
   };
 
+  // Toggle Sidebar visibility
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
+
+  // Close Sidebar
+  const closeSidebar = () => {
+    setIsSidebarVisible(false);
+  };
+
   const handleSearch = () => {
-      setSearchTerm('search');
+    setSearchTerm('search');
   };
 
   const handleViewAuctions = () => {
     navigate('/viewauctions');
   };
 
-    const handleViewProfile = () => {
-      navigate('/profile');
-    };
+  const handleViewProfile = () => {
+    navigate('/profile');
+  };
 
   const handleWatchlist = () => {
     navigate('/watchlist');
@@ -76,70 +86,77 @@ function BidderHomePage() {
     setShowLogoutModal(true);
   };
 
-const handleLogoutConfirm = () => {
+  const handleLogoutConfirm = () => {
     setShowLogoutModal(false);
     navigate('/login');
-};
+  };
 
-const handleLogoutCancel = () => {
+  const handleLogoutCancel = () => {
     setShowLogoutModal(false);
-};
+  };
 
+  const handleProfileManagement = () => {
+    navigate('/profilemanagement');
+  };
 
-const handleProfileManagement = () => {
-  navigate('/profilemanagement');
-};
   return (
     <div className="bidder-homepage">
-<div className="profile-container" onClick={handleProfileManagement}>
+      {/* Profile container */}
+      <div className="profile-container" onClick={handleProfileManagement}>
         <h3>{userName}</h3>
-    <div className="profile-image">
-    <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
-  </div>
-</div>
+        <div className="profile-image">
+          <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
+        </div>
+      </div>
 
+      {/* Pass visibility, close function, and other props to Sidebar */}
       <Sidebar 
-            onWalletClick={handleWallet}
-            onLogoutClick={handleLogoutClick}
-        />
-      <div className="top-bar">
-  <div className="logo-container">
-    <img 
-      src={BidBayLogo}
-      alt="BidBay Logo" 
-      className="logo" 
-      onClick={() => navigate('/')} 
-      style={{ cursor: 'pointer' }}
-    />
-  </div>
-  <form onSubmit={handleSearch}>
-    <input
-      type="text"
-      placeholder="Search auctions..."
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-    />
-    <button type="submit">Search</button>
-  </form>
-</div>
+        onWalletClick={handleWallet}
+        onLogoutClick={handleLogoutClick}
+        isVisible={isSidebarVisible} // Pass visibility
+        onCloseSidebar={closeSidebar} // Pass the close function
+      />
 
-          <div className="content-container">
-            <div className="main-content">            
-                          {currentContent === 'wallet' && <EWalletManagement />}
-                    </div>
-                  </div>
+      <div className="top-bar">
+        <div className="logo-container">
+          <img 
+            src={BidBayLogo}
+            alt="BidBay Logo" 
+            className="logo" 
+            onClick={toggleSidebar} // Toggle sidebar on logo click
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Search auctions..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+
+      <div className="content-container">
+        <div className="main-content">            
+          {currentContent === 'wallet' && <EWalletManagement />}
+        </div>
+      </div>
+
+      {/* Logout modal */}
       {showLogoutModal && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <h3>Confirm Logout</h3>
-                        <p>Are you sure you want to quit?</p>
-                        <div className="modal-buttons">
-                            <button onClick={handleLogoutConfirm}>Yes, Logout</button>
-                            <button onClick={handleLogoutCancel}>Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            )}
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to quit?</p>
+            <div className="modal-buttons">
+              <button onClick={handleLogoutConfirm}>Yes, Logout</button>
+              <button onClick={handleLogoutCancel}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

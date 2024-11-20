@@ -41,7 +41,7 @@
 .auction-info {
     width: 100%;
     padding: 10px;
-    background-color: #9ff996; /* Light grey background for clarity */
+    background-color: #394038; /* Light grey background for clarity */
     margin-bottom: 20px;
     border-radius: 10px; /* Rounded corners */
 }
@@ -62,7 +62,7 @@
 .editable-management-text:focus,
 .editable-history-text:focus {
     border: 1px dashed white; /* Show a dashed border when editing */
-    background: rgba(255, 255, 255, 0.1); /* Light background while editing */
+    background: #b159691a; /* Light background while editing */
 }
 
 .auction-info h2 {
@@ -110,7 +110,7 @@
 .bid-form {
     width: 100%;
     padding: 20px;
-    background-color: #9ff996;
+    background-color: #394038;
     border-radius: 8px; /* Rounded corners */
 }
 
@@ -152,7 +152,7 @@
 .auction-table td {
     padding: 10px;
     text-align: left;
-    border: 1px solid #000000; /* Light borders around table cells */
+    border: 1px solid #bbb2b2; /* Light borders around table cells */
 }
 
 .auction-table th {

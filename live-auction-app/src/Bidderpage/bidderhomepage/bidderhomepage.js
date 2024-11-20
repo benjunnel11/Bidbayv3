@@ -23,8 +23,9 @@ function BidderHomePage() {
     navigate('/watchlist');
   };
 
+  // Updated function to navigate directly to BiddingManagement page
   const handleViewHistory = () => {
-    navigate('/bidhistory');
+    navigate('/biddingmanagement');
   };
 
   const handleLogout = () => {
@@ -33,7 +34,6 @@ function BidderHomePage() {
 
   return (
     <div className="bidder-homepage">
-      {/* Top bar with BidBay title and centered search */}
       <div className="top-bar">
         <h2>BidBay</h2>
         <form onSubmit={handleSearch}>
@@ -48,7 +48,6 @@ function BidderHomePage() {
       </div>
 
       <div className="content-wrapper">
-        {/* Sidebar */}
         <div className="side-bar">
           <ul>
             <li onClick={handleViewAuctions}>Home</li>
@@ -58,7 +57,6 @@ function BidderHomePage() {
           </ul>
         </div>
 
-        {/* Main content */}
         <div className="main-content">
           <header>
             <h2>Welcome back Bidder!</h2>

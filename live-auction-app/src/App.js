@@ -11,6 +11,7 @@ import BidderRegistrationPage2 from './Bidderpage/BidderRegistration/bidderregis
 import SellerHomePage from './Sellerpage/sellerhomepage/sellerhomepage';
 import BidderHomePage from './Bidderpage/bidderhomepage/bidderhomepage';
 import BiddingManagement from './BiddingManagement/biddingmanagement'; // Import BiddingManagement
+import WatchLivePage from './WatchLivePage/watchlive';
 import './App.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path='/sellerhomepage' element={<SellerHomePage/>}/>
           <Route path='/bidderhomepage' element={<BidderHomePage/>}/>
           <Route path='/biddingmanagement' element={<BiddingManagement/>}/> {/* Ensure this route is here */}
+          <Route path='/watchlive' element={<WatchLivePage/>}/>
           <Route path='*' element={<Homepage/>}/>
         </Routes>
       </Router>

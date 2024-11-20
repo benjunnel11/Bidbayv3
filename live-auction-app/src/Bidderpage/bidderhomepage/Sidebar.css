@@ -1,0 +1,48 @@
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: -250px; /* Initially hide the sidebar by placing it off-screen */
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    transition: left 0.3s ease-in-out; /* Smooth transition */
+  }
+  
+  .side-nav.show {
+    left: 0; /* When sidebar is visible, slide it in */
+  }
+  
+  .dashboard-button {
+    width: 100%;
+    padding: 15px;
+    color: white;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 18px;
+  }
+  
+  .dashboard-button:hover {
+    background-color: #555;
+  }
+  
+  .logout {
+    position: absolute;
+    bottom: 20px;
+  }
+  
+  /* Close button styling */
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .close-btn:hover {
+    color: #ccc;
+  }

@@ -222,6 +222,45 @@
     padding-right: 10px;
   }
 
+  .transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    color: black; /* Set font color to black */
+  }
+  
+  .transaction-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .transaction-name {
+    font-weight: 500;
+    color: black; /* Ensure transaction name text is black */
+  }
+  
+  .transaction-date {
+    font-size: 12px;
+    color: #666; /* Date can remain subtle or change to black if needed */
+    margin-top: 4px;
+  }
+  
+  .transaction-amount {
+    font-weight: 600;
+    color: black; /* Set amount text color to black */
+  }
+  
+  .transaction-amount.positive {
+    color: green; /* Positive amount in black */
+  }
+  
+  .transaction-amount.negative {
+    color: red; /* Negative amount in black */
+  }
+  
   /* Styling the scrollbar */
   .transaction-list::-webkit-scrollbar {
     width: 8px;

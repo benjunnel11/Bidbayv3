@@ -16,9 +16,14 @@ function BidderHomePage() {
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
   const [profilePicture, setProfilePicture] = useState(null);
-
-  // New state to manage sidebar visibility
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+
+  const [userData, setUserData] = useState({
+      name: '',
+      email: '',
+      profilePicture: '',
+      balance: 0
+  });
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -36,10 +41,13 @@ function BidderHomePage() {
       const userSnap = await getDoc(userDoc);
 
       if (userSnap.exists()) {
-        const userData = userSnap.data();
-        setUserName(userData.firstName); // Set username
-        setUserEmail(userData.email); // Set email
-        setProfilePictureURL(userData.profilePicture); // Set profile picture URL
+        const data = userSnap.data();
+        setUserData({
+          name: data.firstName,
+          email: data.email,
+          profilePicture: data.profilePicture,
+          balance: data.balance || 0
+        });
       } else {
         console.error("No user data found.");
       }
@@ -127,15 +135,9 @@ function BidderHomePage() {
             style={{ cursor: 'pointer' }}
           />
         </div>
-        <form onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Search auctions..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button type="submit">Search</button>
-        </form>
+        <div className="balance-container">
+          <h3>${userData.balance.toFixed(2)}</h3>
+        </div>
       </div>
 
       <div className="content-container">

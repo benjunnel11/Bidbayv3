@@ -21,19 +21,69 @@
   box-sizing: border-box;
 }
 
-.header {
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  height: 50px;
+  width: 100%;
+}
+
+.top-bar h2 {
+  top: 50px;
+  color: white;
+  margin: 0;
+}
+
+.top-bar form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.top-bar input {
+  padding: 5px 10px;
+  width: 35%; /* Adjusted width to shorten search bar */
+  margin-right: 10px;
+  border: none;
+  border-radius: 20px;
+}
+
+.top-bar button {
+  padding: 5px 15px;
   background-color: #4caf50;
   color: white;
-  padding: 20px;
-  width: 100%;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }
+
+.balance-container {
+  color: white;
+  margin-right: 160px; /* Spacing from the profile container */
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  height: 35px;
+  top: 0;
+  right: 20px; 
+  display: flex;
+  align-items: center;
+  cursor: pointer; 
+  padding: 8px 15px;
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
 
 .side-nav {
   position: fixed;
-  top: 0;
+  top: 100;
   left: -250px;
   width: 250px;
   height: 100vh;
@@ -45,6 +95,23 @@
   flex-direction: column;
   align-items: center;
   
+}
+
+.content-container {
+  position: absolute;
+  top: 50px;
+  left: 230px;
+  right: 10px;
+  bottom: 60px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.main-content {
+  margin-top: 50px;
+  flex: 1;
+  padding: 20px;
+  color: white;
 }
 
 .dashboard-button {
@@ -171,7 +238,8 @@
 }
 .profile-container {
   position: fixed;
-  top: 10px;
+  margin-top: -4px;
+  height: 40px;
   right: 20px;
   display: flex;
   align-items: center;
@@ -417,4 +485,20 @@
   height: 100%;
   object-fit: cover;
   cursor: inherit;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  margin-right: 20px;
+  transition: transform 0.2s;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }

@@ -42,6 +42,13 @@ const SellerRegistrationPage2 = () => {
         address,
         email,
         username,
+        mode: "",
+        wallet: "",
+        refID: "",
+        number: "",
+        amount: "",
+        transactionHistory: [],
+        date: new Date().toISOString(),
       });
 
       // Clear localStorage after successful registration

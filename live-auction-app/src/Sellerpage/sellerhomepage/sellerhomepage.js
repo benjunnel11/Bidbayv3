@@ -1,23 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import EWalletManagement from '../../E-WalletManagement/Wallet';
 import './sellerhomepage.css';
-import { FaVideo, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
+import { FaVideo, FaWallet, FaSignOutAlt, FaBoxOpen } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
-import { IoMdAdd } from "react-icons/io";
-import { auth, firestore, storage } from '../../firebase'; // Ensure correct import paths
+import { auth, firestore, storage } from '../../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import BidBayLogo from '../../image/Bidbay.png';
 
 function SellerHomePage() {
   const navigate = useNavigate();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [balance, setBalance] = useState('$0.00');
+  const [currentContent, setCurrentContent] = useState('dashboard');
   const [stream, setStream] = useState(null);
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
   const [profilePicture, setProfilePicture] = useState(null);
   const webcamContainerRef = useRef(null);
   const [profilePictureURL, setProfilePictureURL] = useState('');
+
+  const [userData, setUserData] = useState({
+      name: '',
+      email: '',
+      profilePicture: '',
+      balance: 0
+  });
 
   const handleStopLive = () => {
     if (stream) {
@@ -92,10 +102,13 @@ function SellerHomePage() {
       const userSnap = await getDoc(userDoc);
 
       if (userSnap.exists()) {
-        const userData = userSnap.data();
-        setUserName(userData.firstName); // Set username
-        setUserEmail(userData.email); // Set email
-        setProfilePictureURL(userData.profilePicture); // Set profile picture URL
+        const data = userSnap.data();
+        setUserData({
+          name: data.firstName,
+          email: data.email,
+          profilePicture: data.profilePicture,
+          balance: data.balance || 0
+        });
       } else {
         console.error("No user data found.");
       }
@@ -110,6 +123,10 @@ function SellerHomePage() {
 
   const handleAddNewItem = () => {
     navigate('/addnewitem');
+  };
+
+  const onWalletClick = () => {
+    setCurrentContent('wallet');
   };
 
   const handleViewItems = () => {
@@ -142,11 +159,25 @@ function SellerHomePage() {
       <div className="seller-homepage">
         {/* Profile Container */}
         <div className="profile-container" onClick={handleProfileManagement}>
-        <h3>{userName}</h3>
-    <div className="profile-image">
-    <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
-  </div>
-</div>
+            <h3>{userData.firstName}</h3>
+            <div className="profile-image">
+              <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
+            </div>
+        </div>
+
+        <div className="top-bar">
+          <div className="logo-container">
+            <img 
+              src={BidBayLogo}
+              alt="BidBay Logo" 
+              className="logo" 
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+          <div className="balance-container">
+            <h3>${userData.balance.toFixed(2)}</h3>
+          </div>
+        </div>
 
         <div className={`nav-toggle ${isNavOpen ? 'open' : ''}`} onClick={toggleNav}>
           <span></span>
@@ -155,20 +186,28 @@ function SellerHomePage() {
         </div>
 
         <nav className={`side-nav ${isNavOpen ? 'open' : ''}`}>
-          <button className="dashboard-button" onClick={handleAddNewItem}><IoMdAdd /> Add new Item</button>
-          <button className="dashboard-button" onClick={handleViewItems}>
-            <FaShoppingCart /> View My Items
-          </button>
-          <button className="dashboard-button" onClick={handleViewSales}>
-            <SiGoogleanalytics /> Analytics
+          <button className="dashboard-button" onClick={handleAddNewItem}>
+            <FaBoxOpen /> Item Management
           </button>
           <button className="dashboard-button" onClick={handleGoLive}>
             <FaVideo /> Go Live
+          </button>
+          <button className="dashboard-button" onClick={onWalletClick}>
+            <FaWallet /> E-Wallet
+          </button>
+          <button className="dashboard-button" onClick={handleViewSales}>
+            <SiGoogleanalytics /> Analytics
           </button>
           <button className="dashboard-button logout" onClick={handleLogoutClick}>
             <FaSignOutAlt /> Logout
           </button>
         </nav>
+
+        <div className="content-container">
+          <div className="main-content">            
+            {currentContent === 'wallet' && <EWalletManagement />}
+          </div>
+        </div>
 
         <div ref={webcamContainerRef} className="webcam-container"></div>
 
@@ -207,4 +246,4 @@ function SellerHomePage() {
   );
 }
 
-export default SellerHomePage;
+export default SellerHomePage

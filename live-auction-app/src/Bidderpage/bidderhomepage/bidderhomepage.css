@@ -54,12 +54,6 @@
   cursor: pointer;
 }
 
-.content-wrapper {
-  display: flex;
-  top: 50px;
-  flex: 1;
-}
-
 .content-container {
   position: absolute;
   top: 50px;

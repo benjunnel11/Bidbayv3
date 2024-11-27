@@ -10,7 +10,6 @@ import BidderRegistrationPage from './Bidderpage/BidderRegistration/bidderregist
 import BidderRegistrationPage2 from './Bidderpage/BidderRegistration/bidderregistration2';
 import SellerHomePage from './Sellerpage/sellerhomepage/sellerhomepage';
 import BidderHomePage from './Bidderpage/bidderhomepage/bidderhomepage';
-
 import BiddingManagement from './BiddingManagement/biddingmanagement';
 import ProfileManagement from './ProfileManagement/profilemanagement';
 import EWalletManagement from './E-WalletManagement/Wallet';

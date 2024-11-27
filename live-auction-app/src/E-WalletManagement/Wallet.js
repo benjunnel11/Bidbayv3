@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { auth, firestore} from '../firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import './Wallet.css';
 
 const Wallet = () => {
@@ -8,8 +10,50 @@ const Wallet = () => {
     const [showWithdrawModal, setShowWithdrawModal] = useState(false);
     const [showWithdrawDetailsModal, setShowWithdrawDetailsModal] = useState(false);
     const [selectedWithdrawMethod, setSelectedWithdrawMethod] = useState('');
+    const [profilePictureURL, setProfilePictureURL] = useState('');
+    const [userName, setUserName] = useState();
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [balance, setBalance] = useState('');
     const [amount, setAmount] = useState('');
+    const [transactionHistory, setTransactionHistory] = useState([]);
+    
+    const [userData, setUserData] = useState({
+        name: '',
+        profilePicture: '',
+        balance: 0
+    });
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          if (user) {
+            fetchUserProfile(user.uid); // Fetch user profile
+          }
+        });
+    
+        return () => unsubscribe(); // Clean up the listener on unmount
+      }, []);
+    
+      const fetchUserProfile = async (uid) => {
+        try {
+            const userDoc = doc(firestore, 'userBidder' || 'userSeller', uid);
+            const userSnap = await getDoc(userDoc);
+    
+            if (userSnap.exists()) {
+                const data = userSnap.data();
+                setUserName(data.firstName);
+                setUserData({
+                    name: data.firstName,
+                    profilePicture: data.profilePicture,
+                    balance: data.balance || 0
+                });
+                setProfilePictureURL(data.profilePicture);
+                setTransactionHistory(data.transactionHistory || []);
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    };
+    
 
     const handleDeposit = () => {
         setShowPaymentModal(true);
@@ -23,16 +67,50 @@ const Wallet = () => {
         setShowDetailsModal(true);
     };
 
-    const handleConfirm = () => {
-        console.log('Payment Details:', {
-            method: selectedPayment,
-            phoneNumber,
-            amount
-        });
-        setShowDetailsModal(false);
-        setPhoneNumber('');
-        setAmount('');
+    const handleConfirm = async () => {
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const userDoc = doc(firestore, 'userBidder' || 'userSeller', user.uid);
+                const userSnap = await getDoc(userDoc);
+                
+                if (userSnap.exists()) {
+                    const currentBalance = userSnap.data().balance || 0;
+                    const newBalance = currentBalance + Number(amount);
+                    
+                    await setDoc(userDoc, {
+                        balance: newBalance
+                    }, { merge: true });
+                    
+                    // Update both state variables
+                    setBalance(newBalance);
+                    setUserData(prev => ({
+                        ...prev,
+                        balance: newBalance
+                    }));
+
+                    const newTransaction = {
+                        mode: 'Deposit',
+                        wallet: selectedPayment,
+                        refID: generateRefID(),
+                        number: phoneNumber,
+                        amount: Number(amount),
+                        date: new Date().toLocaleString(),
+                    };
+                    updateTransactionHistory(newTransaction);
+                }
+                
+                setShowDetailsModal(false);
+                setPhoneNumber('');
+                setAmount('');
+                
+            } catch (error) {
+                console.error("Error updating balance:", error);
+            }
+        }
     };
+    
+    
     
     const handleWithdraw = () => {
       setShowWithdrawModal(true);
@@ -44,49 +122,83 @@ const Wallet = () => {
       setShowWithdrawDetailsModal(true);
     };
     
-    const handleWithdrawConfirm = () => {
-      console.log('Withdraw Details:', {
-        method: selectedWithdrawMethod,
-        phoneNumber,
-        amount
-      });
-      setShowWithdrawDetailsModal(false);
-      setPhoneNumber('');
-      setAmount('');
-    };
+const handleWithdrawConfirm = async () => {
+    const user = auth.currentUser;
+    if (user) {
+        try {
+            const userDoc = doc(firestore, 'userBidder' || 'userSeller', user.uid);
+            const userSnap = await getDoc(userDoc);
+            
+            if (userSnap.exists()) {
+                const currentBalance = userSnap.data().balance || 0;
+                const withdrawAmount = Number(amount);
+                
+                // Check if user has sufficient balance
+                if (currentBalance >= withdrawAmount) {
+                    const newBalance = currentBalance - withdrawAmount;
+                    
+                    await setDoc(userDoc, {
+                        balance: newBalance
+                    }, { merge: true });
 
-    const transactions = [
-        {
-            id: 1,
-            name: "Spotify Subscription",
-            date: "28 Jan, 12:30 AM",
-            amount: -2500
-        },
-        {
-            id: 2,
-            name: "Freepik Sales",
-            date: "25 Jan, 10:40 PM",
-            amount: 750
-        },
-        {
-            id: 3,
-            name: "Mobile Service",
-            date: "20 Jan, 03:29 PM",
-            amount: -150
-        },
-        {
-            id: 4,
-            name: "Wilson",
-            date: "15 Jan, 03:29 PM",
-            amount: -1050
-        },
-        {
-            id: 5,
-            name: "Emily",
-            date: "14 Jan, 10:40 PM",
-            amount: 840
+                    // Update both state variables
+                    setBalance(newBalance);
+                    setUserData(prev => ({
+                        ...prev,
+                        balance: newBalance
+                    }));
+
+                    const newTransaction = {
+                        mode: 'Withdraw',
+                        wallet: selectedWithdrawMethod,
+                        refID: generateRefID(),
+                        number: phoneNumber,
+                        amount: Number(amount),
+                        date: new Date().toLocaleString(),
+                    };
+                    updateTransactionHistory(newTransaction);
+                    
+                    setShowWithdrawDetailsModal(false);
+                    setPhoneNumber('');
+                    setAmount('');
+                } else {
+                    alert('Insufficient balance');
+                }
+            }
+        } catch (error) {
+            console.error("Error updating balance:", error);
         }
-    ];
+    }
+};
+    
+
+const generateRefID = () => {
+    return Math.random().toString(36).substr(2, 9);
+};
+
+const updateTransactionHistory = async (transaction) => {
+    const user = auth.currentUser;
+    if (user) {
+        try {
+            const userDoc = doc(firestore, 'userBidder' || 'userSeller', user.uid);
+            const userSnap = await getDoc(userDoc);
+            let currentHistory = [];
+
+            if (userSnap.exists()) {
+                currentHistory = userSnap.data().transactionHistory || [];
+            }
+
+            const updatedHistory = [...currentHistory, transaction];
+
+            await setDoc(userDoc, { transactionHistory: updatedHistory }, { merge: true });
+
+            setTransactionHistory(updatedHistory);
+            console.log('Transaction Added:', transaction);
+        } catch (error) {
+            console.error("Error updating transaction history:", error);
+        }
+    }
+};
 
     return (
         <div className="wallet-container">
@@ -94,14 +206,14 @@ const Wallet = () => {
                 <div className="top-section">
                     <div className="profile-info">
                         <div className="profile-image-container">
-                            <img src="https://placehold.co/100x100" alt="John Cena" />
+                            <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
                         </div>
-                        <h2>John Cena</h2>
+                        <h2>{userName}</h2>
                     </div>
                     
                     <div className="balance-info">
                         <span className="balance-label">Current Balance</span>
-                        <h1 className="balance-amount">$2,145.00</h1>
+                        <h1 className="balance-amount">${userData.balance.toFixed(2)}</h1>
                     </div>
                     
                     <div className="action-buttons">
@@ -152,14 +264,18 @@ const Wallet = () => {
                 <div className="transaction-section">
                     <h3>Transaction History</h3>
                     <div className="transaction-list">
-                        {transactions.map((transaction) => (
-                            <div key={transaction.id} className="transaction-item">
-                                <div className="transaction-info">
-                                    <span className="transaction-name">{transaction.name}</span>
-                                    <span className="transaction-date">{transaction.date}</span>
-                                </div>
-                                <span className={`transaction-amount ${transaction.amount > 0 ? 'positive' : 'negative'}`}>
-                                    {transaction.amount > 0 ? `+${transaction.amount}` : `-${Math.abs(transaction.amount)}`}
+                        {transactionHistory.map((txn, index) => (
+                            <div key={index} className="transaction-item">
+                                <span>{txn.mode} via {txn.wallet}</span>
+                                <span>RefID: {txn.refID}</span>
+                                <span>{txn.date}</span>
+                                <span style={{ color: txn.mode === 'Deposit' ? 'green' : 'red' }}>
+                                    Amount: {txn.mode === 'Deposit' ? (
+                                            <span style={{ color: 'green', fontWeight: 'bold' }}>+ </span>
+                                        ) : (
+                                            <span style={{ color: 'red', fontWeight: 'bold' }}>- </span>
+                                        )}
+                                        ${txn.amount.toFixed(2)}
                                 </span>
                             </div>
                         ))}

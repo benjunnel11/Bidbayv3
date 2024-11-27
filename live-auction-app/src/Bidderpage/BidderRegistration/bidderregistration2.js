@@ -11,6 +11,7 @@ const BidderRegistrationPage2 = () => {
   const [gender, setGender] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [address, setAddress] = useState('');
+  const [balance] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -39,8 +40,16 @@ const BidderRegistrationPage2 = () => {
         gender,
         birthdate,
         address,
+        balance,
         email,
         username,
+        mode: "",
+        wallet: "",
+        refID: "",
+        number: "",
+        amount: "",
+        transactionHistory: [],
+        date: new Date().toISOString(),
       });
 
       // Clear localStorage after successful registration

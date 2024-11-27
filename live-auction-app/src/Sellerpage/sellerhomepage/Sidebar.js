@@ -4,8 +4,9 @@ import { FaList, FaVideo, FaWallet, FaSignOutAlt } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
 import { IoPersonSharp } from "react-icons/io5";
 import { IoMdStats } from "react-icons/io";
+import './Sidebar.css';
 
-function Sidebar({ onWalletClick, onLogoutClick }) {
+function Sidebar({ onWalletClick, onLogoutClick, isVisible, onCloseSidebar }) {
     const navigate = useNavigate();
 
     const handleAddNewItem = () => {

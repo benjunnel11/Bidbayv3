@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './bidderhomepage.css';
 import EWalletManagement from '../../E-WalletManagement/Wallet';
 import Sidebar from './Sidebar';
-import { auth, firestore } from '../../firebase';
+import { auth, firestore, storage } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import BidBayLogo from '../../image/Bidbay.png';
 
@@ -39,15 +39,16 @@ function BidderHomePage() {
     try {
       const userDoc = doc(firestore, 'userBidder', uid);
       const userSnap = await getDoc(userDoc);
-
+  
       if (userSnap.exists()) {
         const data = userSnap.data();
         setUserData({
           name: data.firstName,
           email: data.email,
           profilePicture: data.profilePicture,
-          balance: data.balance || 0
+          balance: data.balance || 0,
         });
+        setProfilePictureURL(data.profilePicture || 'default-avatar.png'); // Use Firestore or default image
       } else {
         console.error("No user data found.");
       }
@@ -111,11 +112,15 @@ function BidderHomePage() {
     <div className="bidder-homepage">
       {/* Profile container */}
       <div className="profile-container" onClick={handleProfileManagement}>
-        <h3>{userName}</h3>
-        <div className="profile-image">
-          <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
-        </div>
-      </div>
+  <h3>{userData.name || "User Name"}</h3>
+  <div className="profile-image">
+    <img 
+      src={profilePictureURL} 
+      alt="Profile" 
+      onError={(e) => e.target.src = 'default-avatar.png'} // Fallback for broken images
+    />
+  </div>
+</div>
 
       {/* Pass visibility, close function, and other props to Sidebar */}
       <Sidebar 

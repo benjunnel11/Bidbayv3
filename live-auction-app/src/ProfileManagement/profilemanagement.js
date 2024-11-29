@@ -142,6 +142,7 @@ function ProfileManagement({ profileType }) {
   }
 
   return (
+    <div className="App">
     <div className="profile-management-container">
       <h2>{userType === 'userBidder' ? 'Bidder Profile Management' : 'Seller Profile Management'}</h2>
 
@@ -208,6 +209,7 @@ function ProfileManagement({ profileType }) {
           {isSaving ? 'Going Back...' : 'Back to Homepage'}
         </button>
       </div>
+    </div>
     </div>
   );
 }

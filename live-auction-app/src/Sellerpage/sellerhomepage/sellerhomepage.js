@@ -100,15 +100,16 @@ function SellerHomePage() {
     try {
       const userDoc = doc(firestore, 'userSeller', uid);
       const userSnap = await getDoc(userDoc);
-
+  
       if (userSnap.exists()) {
         const data = userSnap.data();
         setUserData({
           name: data.firstName,
           email: data.email,
           profilePicture: data.profilePicture,
-          balance: data.balance || 0
+          balance: data.balance || 0,
         });
+        setProfilePictureURL(data.profilePicture || 'default-avatar.png'); // Use Firestore or default image
       } else {
         console.error("No user data found.");
       }
@@ -159,11 +160,15 @@ function SellerHomePage() {
       <div className="seller-homepage">
         {/* Profile Container */}
         <div className="profile-container" onClick={handleProfileManagement}>
-            <h3>{userData.firstName}</h3>
-            <div className="profile-image">
-              <img src={profilePictureURL || 'default-avatar.png'} alt="Profile" />
-            </div>
-        </div>
+  <h3>{userData.name || "User Name"}</h3>
+  <div className="profile-image">
+    <img 
+      src={profilePictureURL} 
+      alt="Profile" 
+      onError={(e) => e.target.src = 'default-avatar.png'} // Fallback for broken images
+    />
+  </div>
+</div>
 
         <div className="top-bar">
           <div className="logo-container">

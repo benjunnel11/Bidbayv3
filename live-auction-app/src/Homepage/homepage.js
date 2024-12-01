@@ -1,5 +1,6 @@
 import './homepage.css';
 import { useNavigate } from 'react-router-dom'; 
+import { Link } from 'react-router-dom'
 
 function App() {
   const navigate = useNavigate();
@@ -12,7 +13,9 @@ function App() {
       <div className="top-bar">
       <nav className="nav-left">
           <ul>
-            <li><a href="/about">About</a></li>
+          <Link to="/about" className="nav-link">
+        About Us
+      </Link>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/store-list">StoreList</a></li>
           </ul>

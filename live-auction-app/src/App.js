@@ -13,6 +13,7 @@ import BidderHomePage from './Bidderpage/bidderhomepage/bidderhomepage';
 import BiddingManagement from './BiddingManagement/biddingmanagement';
 import ProfileManagement from './ProfileManagement/profilemanagement';
 import EWalletManagement from './E-WalletManagement/Wallet';
+import AboutUs from './About/aboutUs';
 import './App.css';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path='/biddingmanagement' element={<BiddingManagement/>}/> 
           <Route path='/profilemanagement' element={<ProfileManagement/>}/>
           <Route path='*' element={<Homepage/>}/>
+          <Route path="/about" element={<AboutUs />} />
         </Routes>
       </Router>
     </React.StrictMode>

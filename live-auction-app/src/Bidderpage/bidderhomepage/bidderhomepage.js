@@ -80,7 +80,7 @@ function BidderHomePage() {
   };
 
   const handleWatchlist = () => {
-    navigate('/watchlist');
+    navigate('/watchlive'); 
   };
 
   const handleWallet = () => {

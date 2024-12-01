@@ -13,6 +13,8 @@ import BidderHomePage from './Bidderpage/bidderhomepage/bidderhomepage';
 import BiddingManagement from './BiddingManagement/biddingmanagement';
 import ProfileManagement from './ProfileManagement/profilemanagement';
 import EWalletManagement from './E-WalletManagement/Wallet';
+
+import WatchLive from './WatchLive/watchlive';
 import './App.css';
 
 function App() {
@@ -32,6 +34,7 @@ function App() {
           <Route path='/bidderhomepage' element={<BidderHomePage/>}/>
           <Route path='/biddingmanagement' element={<BiddingManagement/>}/> 
           <Route path='/profilemanagement' element={<ProfileManagement/>}/>
+          <Route path='/watchlive' element={<WatchLive/>}/>
           <Route path='*' element={<Homepage/>}/>
         </Routes>
       </Router>

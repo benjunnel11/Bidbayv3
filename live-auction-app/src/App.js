@@ -10,6 +10,7 @@ import BidderRegistrationPage from './Bidderpage/BidderRegistration/bidderregist
 import BidderRegistrationPage2 from './Bidderpage/BidderRegistration/bidderregistration2';
 import SellerHomePage from './Sellerpage/sellerhomepage/sellerhomepage';
 import BidderHomePage from './Bidderpage/bidderhomepage/bidderhomepage';
+import About from './About/about';
 
 import BiddingManagement from './BiddingManagement/biddingmanagement';
 import ProfileManagement from './ProfileManagement/profilemanagement';
@@ -34,6 +35,7 @@ function App() {
           <Route path='/biddingmanagement' element={<BiddingManagement/>}/> 
           <Route path='/profilemanagement' element={<ProfileManagement/>}/>
           <Route path='*' element={<Homepage/>}/>
+          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
     </React.StrictMode>

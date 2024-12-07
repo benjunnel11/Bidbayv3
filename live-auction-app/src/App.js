@@ -50,6 +50,7 @@ const MainAdminContent = () => {
           <Route exact path='/' element={<Homepage/>}/>
           <Route path="livemanagement" element={<LiveManagement />} />
           <Route path="e-wallet" element={<EWalletManagement/>} />
+         
         </Routes>
       </div>
     </div>

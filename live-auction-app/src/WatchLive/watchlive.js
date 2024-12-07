@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./watchlive.css";
+
+// Importing images for slides
+import slide1 from './Image/BidBuy.jpg';
+import slide2 from './Image/Warning.jpg';
+import slide3 from './Image/Security.jpg';
+import slide4 from './Image/Seller.jpg';
 
 const WatchLive = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLiveAccessGranted, setLiveAccessGranted] = useState(false); // Track access
+  const [showPrompt, setShowPrompt] = useState(false); // Track code prompt visibility
 
+  const navigate = useNavigate(); // Initialize useNavigate
+  
+  // Using imported images in the slides array
   const slides = [
-    "/images/slide1.jpg", // Replace with your image URLs
-    "/images/slide2.jpg",
-    "/images/slide3.jpg",
-    "/images/slide4.jpg",
+    slide1,
+    slide2,
+    slide3,
+    slide4,
   ];
 
   const videos = [
@@ -26,8 +38,42 @@ const WatchLive = () => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
+  const handleLiveClick = () => {
+    setShowPrompt(true); // Show the code prompt
+  };
+
+  const handleCodeSubmit = (code) => {
+    const correctCode = "123456"; // Updated access code
+    if (code === correctCode) {
+      setLiveAccessGranted(true);
+      setShowPrompt(false); // Hide the prompt after success
+    } else {
+      alert("Incorrect Code. Please try again.");
+    }
+  };
+
+  // Function to handle "Back" button click
+  const handleBackClick = () => {
+    navigate('/bidderhomepage'); // Navigate to bidderhomepage
+  };
+
+  // Automatic slide change every 3 seconds
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 3000); // Change slide every 3 seconds
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(slideInterval);
+  }, [slides.length]); // Only re-run effect when slides length changes
+
   return (
     <div className="watchlive-container">
+      {/* Back Button */}
+      <button className="back-btn" onClick={handleBackClick}>
+        Back
+      </button>
+
       {/* Slideshow */}
       <div className="slideshow">
         <button className="slide-button left" onClick={handlePrevSlide}>
@@ -39,12 +85,51 @@ const WatchLive = () => {
         </button>
       </div>
 
-      {/* Options */}
-      <div className="options">
-        <button className="option-button">Option 1</button>
-        <button className="option-button">Option 2</button>
-        <button className="option-button">Option 3</button>
+      {/* Live Section */}
+      <div className="live-section" onClick={handleLiveClick}>
+        <div className="live-overlay">
+          <span>LIVE</span>
+        </div>
+        {!isLiveAccessGranted && (
+          <button className="enter-live">Click to Access Live</button>
+        )}
       </div>
+
+      {/* Code Prompt */}
+      {showPrompt && (
+        <div className="code-prompt">
+          <div className="prompt-box">
+            <p>Enter Access Code:</p>
+            <input
+              type="text"
+              placeholder="Access Code"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleCodeSubmit(e.target.value);
+              }}
+            />
+            <button
+              onClick={() =>
+                handleCodeSubmit(document.querySelector("input").value)
+              }
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Product Description */}
+      {isLiveAccessGranted && (
+        <div className="product-container">
+          <img src="/images/watch.jpg" alt="Watch" />
+          <div className="description">
+            <h3>Description</h3>
+            <p>Item: Watch</p>
+            <p>Color: Black</p>
+            <p>Price: $69.00</p>
+          </div>
+        </div>
+      )}
 
       {/* Videos Section */}
       <div className="videos-section">

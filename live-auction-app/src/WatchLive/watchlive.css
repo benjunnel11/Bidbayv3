@@ -12,6 +12,21 @@
   z-index: 100;
 }
 
+/* Close Button Styles */
+.close-prompt {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #e74c3c; /* Red color for close */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-prompt:hover {
+  background-color: #c0392b;
+}
+
 .prompt-box {
   background: white;
   padding: 20px;
@@ -142,9 +157,10 @@
 }
 
 .videos-section {
-  position: absolute;
+  position: relative; /* Changed from absolute to relative */
+  margin-top: 40px; /* Adjust based on the spacing you want */
   padding: 20px;
-  bottom: -1000px;
+  bottom: -400px;
 }
 
 .video-list {
@@ -180,4 +196,26 @@ video {
 
 .back-btn:hover {
   background-color: #2980b9;
+}
+
+body {
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd, #c2e9fb); /* Gradient colors */
+  background-size: 400% 400%; /* Ensures smooth color transitions */
+  animation: gradientAnimation 15s ease infinite; /* Animation with a duration of 15 seconds */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Ensures consistent font style */
+}
+
+/* Keyframes for the gradient animation */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

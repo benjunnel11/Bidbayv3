@@ -96,27 +96,31 @@ const WatchLive = () => {
       </div>
 
       {/* Code Prompt */}
-      {showPrompt && (
-        <div className="code-prompt">
-          <div className="prompt-box">
-            <p>Enter Access Code:</p>
-            <input
-              type="text"
-              placeholder="Access Code"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleCodeSubmit(e.target.value);
-              }}
-            />
-            <button
-              onClick={() =>
-                handleCodeSubmit(document.querySelector("input").value)
-              }
-            >
-              Submit
-            </button>
-          </div>
-        </div>
-      )}
+    {showPrompt && (
+      <div className="code-prompt">
+      <div className="prompt-box">
+        <p>Enter Access Code:</p>
+        <input
+        type="text"
+        placeholder="Access Code"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleCodeSubmit(e.target.value);
+        }}
+        />
+      <button
+        onClick={() =>
+          handleCodeSubmit(document.querySelector("input").value)
+        }
+      >
+        Submit
+      </button>
+      {/* Close Button */}
+      <button className="close-prompt" onClick={() => setShowPrompt(false)}>
+        Close
+      </button>
+      </div>
+       </div>
+       )}
 
       {/* Product Description */}
       {isLiveAccessGranted && (

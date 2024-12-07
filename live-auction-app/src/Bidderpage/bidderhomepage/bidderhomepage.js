@@ -76,7 +76,7 @@ function BidderHomePage() {
   };
 
   const handleViewProfile = () => {
-    navigate('/profile');
+    navigate('/profilemanagement');
   };
 
   const handleWatchlist = () => {
@@ -118,9 +118,12 @@ function BidderHomePage() {
       src={profilePictureURL} 
       alt="Profile" 
       onError={(e) => e.target.src = 'default-avatar.png'} // Fallback for broken images
+
+      
     />
   </div>
 </div>
+
 
       {/* Pass visibility, close function, and other props to Sidebar */}
       <Sidebar 

@@ -10,11 +10,11 @@ function Sidebar({ onWalletClick, onLogoutClick, isVisible, onCloseSidebar }) {
 
   // Handle click to navigate to various pages
   const handleDashboard = () => {
-    navigate('/dashboard');
+    alert('You are currently on the Dashboard');
   };
 
   const handleViewProfile = () => {
-    navigate('/profile');
+    navigate('/profilemanagement');
   };
 
   const handleWatchLive = () => {

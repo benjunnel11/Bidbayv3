@@ -1,33 +1,34 @@
 import './homepage.css';
 import { useNavigate } from 'react-router-dom'; 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import coverGif from './video/cover.gif'; // Import the GIF
 
 function App() {
   const navigate = useNavigate();
-  const handleLogin =() => {
+  const handleLogin = () => {
     navigate('/login');
   };
-  
+
   return (
     <div className="Homepage">
       <div className="top-bar">
-      <nav className="nav-left">
+        <nav className="nav-left">
           <ul>
-          <Link to="/about" className="nav-link">
-        About Us
-      </Link>
+            <Link to="/about" className="nav-link">About Us</Link>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/store-list">StoreList</a></li>
           </ul>
-        </nav>  
+        </nav>
         <div className="nav-right">
           <button className="login-btn" onClick={handleLogin}>Get Started!</button>
         </div>
       </div>
 
-      <div className="welcome-container">
-        <h1>Welcome User</h1>
+      {/* GIF Background */}
+      <div className="gif-background">
+        <img src={coverGif} alt="Background Animation" />
       </div>
+
     </div>
   );
 }

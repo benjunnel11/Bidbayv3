@@ -16,6 +16,7 @@ import SellerWallet from './E-WalletManagement/Seller/Wallet';
 import BidderWallet from './E-WalletManagement/Bidder/bidderWallet';
 import AboutUs from './About/aboutUs';
 import Sales from './SalesManagement/Sales';
+import WatchLive from './WatchLive/watchlive';
 import './App.css';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path='/profilemanagement' element={<ProfileManagement/>}/>
           <Route path='*' element={<Homepage/>}/>
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/watchlive" element={<WatchLive />} />
         </Routes>
       </Router>
     </React.StrictMode>

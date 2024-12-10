@@ -14,6 +14,7 @@ import BiddingManagement from './BiddingManagement/biddingmanagement';
 import ProfileManagement from './ProfileManagement/profilemanagement';
 import EWalletManagement from './E-WalletManagement/Wallet';
 import AboutUs from './About/aboutUs';
+import WatchLive from './WatchLive/watchlive';
 import './App.css';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path='/profilemanagement' element={<ProfileManagement/>}/>
           <Route path='*' element={<Homepage/>}/>
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/watchlive" element={<WatchLive />} />
         </Routes>
       </Router>
     </React.StrictMode>

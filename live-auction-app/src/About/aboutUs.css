@@ -184,3 +184,23 @@
     }
   }
   
+
+  /* Style for Return Button */
+.return-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: rgba(0, 255, 0, 0.7); /* Green background */
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.return-button:hover {
+  background-color: rgba(0, 255, 0, 1); /* Darker green on hover */
+}

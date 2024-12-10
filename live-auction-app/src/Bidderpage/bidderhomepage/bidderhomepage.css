@@ -9,7 +9,7 @@
   flex-direction: column;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  background: linear-gradient(-45deg, #1a1d1e, #aeb6b8, #525152, #151616);
+  background: linear-gradient(45deg, #292626, #7f736f, #948e93, #31353b, #4e5d64); /* Gradient colors */
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
 }
@@ -279,3 +279,17 @@
 .logo:hover {
   transform: scale(1.05);
 }
+
+
+/* Base Styles with Background GIF */
+.bidder-homepage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(45deg, #292626, #7f736f, #948e93, #31353b, #4e5d64); /* Gradient colors */
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+}
+

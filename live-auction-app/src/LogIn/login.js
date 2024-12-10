@@ -66,6 +66,8 @@ function LoginPage() {
     }
   };
 
+
+  
   // Navigate to Seller Registration
   const onSellerRegister = () => {
     navigate('/sellerregistration');

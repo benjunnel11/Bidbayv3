@@ -1,0 +1,199 @@
+/* Code Prompt Styles */
+.code-prompt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+/* Close Button Styles */
+.close-prompt {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #e74c3c; /* Red color for close */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-prompt:hover {
+  background-color: #c0392b;
+}
+
+.prompt-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.prompt-box input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.prompt-box button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.prompt-box button:hover {
+  background-color: #45a049;
+}
+
+/* Product Container */
+.product-container {
+  position: relative;
+  margin-top: 20px;
+  background-color: white;
+  bottom: -380px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* General Styles for Other Sections */
+.watchlive-container {
+  font-family: Arial, sans-serif;
+}
+
+.slideshow {
+  position: relative;
+  bottom: -200px;
+  width: 200%;
+  height: auto;
+  max-width: 100%;
+  margin-top: -120px;
+  display: flex;
+}
+.slideshow img {
+  width: 100%;         /* Stretch the image to cover the full width of the slideshow container */
+  height: 100%;        /* Stretch the image to cover the full height of the slideshow container */
+  object-fit: cover;   /* Ensure the image covers the container without distortion */
+}
+
+.slide-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.slideshow img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out; /* Smooth fade transition */
+}
+
+.slide-image.active {
+  opacity: 1;
+}
+
+.live-section {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  bottom: -350px;
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  margin-top: -130px;
+}
+
+.live-overlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.enter-live {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f1c40f;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.enter-live:hover {
+  background-color: #f39c12;
+}
+
+
+/* Back Button Styling */
+.back-btn {
+  position: absolute; /* Position it absolutely or wherever you want */
+  top: 20px; /* Adjust position as needed */
+  left: 20px; /* Adjust position as needed */
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 10; /* Make sure it's above other content */
+}
+
+.back-btn:hover {
+  background-color: #2980b9;
+}
+
+body {
+  background: linear-gradient(45deg, #292626, #7f736f, #948e93, #31353b, #4e5d64); /* Gradient colors */
+  background-size: 400% 400%; /* Ensures smooth color transitions */
+  animation: gradientAnimation 15s ease infinite; /* Animation with a duration of 15 seconds */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Ensures consistent font style */
+}
+
+/* Keyframes for the gradient animation */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

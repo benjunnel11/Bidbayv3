@@ -8,13 +8,12 @@ import './Sidebar.css';
 function Sidebar({ onWalletClick, onLogoutClick, isVisible, onCloseSidebar }) {
   const navigate = useNavigate();
 
-  // Handle click to navigate to various pages
   const handleDashboard = () => {
     navigate('/dashboard');
   };
 
   const handleViewProfile = () => {
-    navigate('/profile');
+    navigate('/profilemanagement');
   };
 
   const handleWatchLive = () => {
@@ -22,7 +21,7 @@ function Sidebar({ onWalletClick, onLogoutClick, isVisible, onCloseSidebar }) {
   };
 
   const handleBidHistory = () => {
-    navigate('/biddingmanagement');  // Navigate to the BiddingManagement page
+    navigate('/biddingmanagement');
   };
 
   return (

@@ -185,3 +185,25 @@
     margin: 0 5px; /* Adjust spacing as needed */
     font-weight: bold; /* Example of making the text bold */
 }
+
+body {
+    background: linear-gradient(45deg, #292626, #7f736f, #948e93, #31353b, #4e5d64); /* Gradient colors */
+    background-size: 400% 400%; /* Ensures smooth color transitions */
+    animation: gradientAnimation 15s ease infinite; /* Animation with a duration of 15 seconds */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Ensures consistent font style */
+  }
+  
+  /* Keyframes for the gradient animation */
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }

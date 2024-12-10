@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import './aboutUs.css'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+import './aboutUs.css';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function About() {
   useEffect(() => {
@@ -11,8 +11,16 @@ function About() {
     });
   }, []);
 
+  const handleReturn = () => {
+    window.history.back(); // This takes the user to the previous page
+  };
+
   return (
     <div className="about-container">
+      <button className="return-button" onClick={handleReturn}>
+        Return
+      </button>
+
       <div className="about-scroll-wrapper">
         <h1 className="glowing-text" data-aos="zoom-in">Welcome to BidBay</h1>
         
@@ -126,3 +134,6 @@ function About() {
 }
 
 export default About;
+
+
+

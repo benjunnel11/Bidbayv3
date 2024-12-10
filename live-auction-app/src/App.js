@@ -12,8 +12,10 @@ import SellerHomePage from './Sellerpage/sellerhomepage/sellerhomepage';
 import BidderHomePage from './Bidderpage/bidderhomepage/bidderhomepage';
 import BiddingManagement from './BiddingManagement/biddingmanagement';
 import ProfileManagement from './ProfileManagement/profilemanagement';
-import EWalletManagement from './E-WalletManagement/Wallet';
+import SellerWallet from './E-WalletManagement/Seller/Wallet';
+import BidderWallet from './E-WalletManagement/Bidder/bidderWallet';
 import AboutUs from './About/aboutUs';
+import Sales from './SalesManagement/Sales';
 import './App.css';
 
 function App() {
@@ -43,15 +45,13 @@ function App() {
 
 const MainAdminContent = () => {
   return (
-    <div className="App">
-      <div className="admin-content">
         <Routes>
           <Route exact path='/' element={<Homepage/>}/>
           <Route path="livemanagement" element={<LiveManagement />} />
-          <Route path="e-wallet" element={<EWalletManagement/>} />
+          <Route path="seller-wallet" element={<SellerWallet/>} />          <Route path="seller-wallet" element={<SellerWallet/>} />
+          <Route path="bidder-wallet" element={<BidderWallet/>} />
+          <Route path="sales" element={<Sales/>} />
         </Routes>
-      </div>
-    </div>
   );
 }
 

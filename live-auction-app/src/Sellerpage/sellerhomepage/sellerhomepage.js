@@ -1,25 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import EWalletManagement from '../../E-WalletManagement/Wallet';
-import './sellerhomepage.css';
-import { FaVideo, FaWallet, FaSignOutAlt, FaBoxOpen } from "react-icons/fa";
-import { SiGoogleanalytics } from "react-icons/si";
 import { auth, firestore, storage } from '../../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import SellerWallet from '../../E-WalletManagement/Seller/Wallet';
+import SalesManagement from '../../SalesManagement/Sales'
 import BidBayLogo from '../../image/Bidbay.png';
+import Sidebar from './Sidebar';
+import './sellerhomepage.css';
 
 function SellerHomePage() {
   const navigate = useNavigate();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [balance, setBalance] = useState('$0.00');
   const [currentContent, setCurrentContent] = useState('dashboard');
-  const [stream, setStream] = useState(null);
-  const [userName, setUserName] = useState();
-  const [userEmail, setUserEmail] = useState();
-  const [profilePicture, setProfilePicture] = useState(null);
-  const webcamContainerRef = useRef(null);
   const [profilePictureURL, setProfilePictureURL] = useState('');
 
   const [userData, setUserData] = useState({
@@ -28,63 +21,6 @@ function SellerHomePage() {
       profilePicture: '',
       balance: 0
   });
-
-  const handleStopLive = () => {
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      setStream(null);
-    }
-  };
-
-  const handleUploadClick = () => {
-    document.getElementById('profile-upload').click();
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePicture(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setUserName(userName);
-    setIsModalOpen(false);
-  };
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
-  const handleGoLive = async () => {
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setStream(mediaStream);
-    } catch (error) {
-      console.error('Error accessing webcam:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (stream && webcamContainerRef.current) {
-      const videoElement = document.createElement('video');
-      videoElement.srcObject = stream;
-      videoElement.autoplay = true;
-      videoElement.playsInline = true;
-      webcamContainerRef.current.appendChild(videoElement);
-
-      return () => {
-        if (webcamContainerRef.current) {
-          webcamContainerRef.current.innerHTML = '';
-        }
-      };
-    }
-  }, [stream]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -130,12 +66,12 @@ function SellerHomePage() {
     setCurrentContent('wallet');
   };
 
-  const handleViewItems = () => {
-    navigate('/viewitems');
+  const onSalesClick = () => {
+    setCurrentContent('sales');
   };
 
-  const handleViewSales = () => {
-    navigate('/salesanalytics');
+  const onClickLive = () => {
+    navigate('/golive');
   };
 
   const handleProfileManagement = () => {
@@ -160,15 +96,15 @@ function SellerHomePage() {
       <div className="seller-homepage">
         {/* Profile Container */}
         <div className="profile-container" onClick={handleProfileManagement}>
-  <h3>{userData.name || "User Name"}</h3>
-  <div className="profile-image">
-    <img 
-      src={profilePictureURL} 
-      alt="Profile" 
-      onError={(e) => e.target.src = 'default-avatar.png'} // Fallback for broken images
-    />
-  </div>
-</div>
+          <h3>{userData.name || "User Name"}</h3>
+          <div className="profile-image">
+            <img 
+              src={profilePictureURL} 
+              alt="Profile" 
+              onError={(e) => e.target.src = 'default-avatar.png'} // Fallback for broken images
+            />
+          </div>
+        </div>
 
         <div className="top-bar">
           <div className="logo-container">
@@ -183,56 +119,21 @@ function SellerHomePage() {
             <h3>${userData.balance.toFixed(2)}</h3>
           </div>
         </div>
-
-        <div className={`nav-toggle ${isNavOpen ? 'open' : ''}`} onClick={toggleNav}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <nav className={`side-nav ${isNavOpen ? 'open' : ''}`}>
-          <button className="dashboard-button" onClick={handleAddNewItem}>
-            <FaBoxOpen /> Item Management
-          </button>
-          <button className="dashboard-button" onClick={handleGoLive}>
-            <FaVideo /> Go Live
-          </button>
-          <button className="dashboard-button" onClick={onWalletClick}>
-            <FaWallet /> E-Wallet
-          </button>
-          <button className="dashboard-button" onClick={handleViewSales}>
-            <SiGoogleanalytics /> Analytics
-          </button>
-          <button className="dashboard-button logout" onClick={handleLogoutClick}>
-            <FaSignOutAlt /> Logout
-          </button>
-        </nav>
+      
+        <Sidebar 
+            isNavOpen={isNavOpen}
+            onWalletClick={() => setCurrentContent('wallet')}
+            onSalesClick={() => setCurrentContent('sales')}
+            onLogoutClick={handleLogoutClick}
+            toggleNav={toggleNav}
+        />
 
         <div className="content-container">
           <div className="main-content">            
-            {currentContent === 'wallet' && <EWalletManagement />}
+            {currentContent === 'wallet' && <SellerWallet />}
+            {currentContent === 'sales' && <SalesManagement />}
           </div>
         </div>
-
-        <div ref={webcamContainerRef} className="webcam-container"></div>
-
-        {stream && (
-          <div className="camera-container">
-            <div className="camera-header">
-              <h3>Live Stream</h3>
-              <button className="exit-button" onClick={handleStopLive}>X</button>
-            </div>
-            <video
-              ref={(videoElement) => {
-                if (videoElement) {
-                  videoElement.srcObject = stream;
-                }
-              }}
-              autoPlay
-              playsInline
-            />
-          </div>
-        )}
 
         {showLogoutModal && (
           <div className="modal-overlay">

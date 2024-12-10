@@ -1,0 +1,150 @@
+.main-container {
+    min-height: 100vh;
+    width: 85vw;
+    position: fixed;
+    top: 70px;
+    left: 250px;
+    right: 25%;
+    bottom: 0;
+    grid-area: main;
+    overflow-y: auto;
+    padding: 20px 20px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.main-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 15px 0;
+    justify-content: end; /* Align to right */
+}
+
+/* Add container wrapper */
+.cards-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.card:first-child {
+    background-color: #2962ff;
+}
+
+.card:nth-child(2) {
+    background-color: #ff6d00;
+}
+
+.card:nth-child(3) {
+    background-color: #2e7d32;
+}
+
+.card-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-inner > .card_icon {
+    font-size: 25px;
+}
+
+.charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 60px;
+    height: 300px;
+}
+
+.sales-history-section {
+    position: fixed;
+    top: 350px;
+    left: 270px;
+    right: 20px;
+    bottom: 60px;
+    height: auto;
+    width: auto;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.sales-history-section h3 {
+    margin-left: 20px;
+    font-size: 18px;
+    color: white;
+}
+
+.sales-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.sales-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+}
+
+/* Scrollbar styling */
+.sales-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sales-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.sales-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.sales-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.sales-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.sales-table th, .sales-table td {
+    border: 1px solid #333333;
+    padding: 8px;
+    text-align: left;
+}
+
+.sales-table th {
+    background-color: #333333;
+    font-weight: bold;
+}
+
+.sales-table tr:hover {
+    background-color: #f1f1f1;
+}

@@ -1,0 +1,318 @@
+
+.wallet-card {
+    min-height: 100vh;
+    width: 87vw;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 70px;
+    left: 250px;
+    right: 25%;
+    bottom: 0;
+    background: white;
+    border-radius: 0px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .top-section {
+    background: linear-gradient(to bottom, #000000, #1a1a1a);
+    padding: 30px 20px;
+    color: white;
+  }
+  
+  .profile-info {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-image-container {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    border: 3px solid white;
+    overflow: hidden;
+  }
+  
+  .profile-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .balance-info {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  
+  .balance-label {
+    font-size: 14px;
+    opacity: 0.8;
+    display: block;
+    margin-bottom: 10px;
+  }
+    .wallet-card .balance-info .balance-amount {
+      font-size: 36px;
+      font-weight: bold;
+      margin: 50px 0;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      line-height: 1%;
+      letter-spacing: 1px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  .wallet-card .action-buttons .btn-deposit,
+  .wallet-card .action-buttons .btn-withdraw {
+      padding: 12px 25px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer !important;
+      pointer-events: auto !important;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 10;
+  }
+  
+  .wallet-card .action-buttons .btn-deposit {
+      background-color: white;
+      color: black;
+  }
+  
+  .wallet-card .action-buttons .btn-withdraw {
+      background-color: transparent;
+      border: 2px solid white;
+      color: white;
+  }
+  
+  .wallet-card .action-buttons .btn-deposit:hover,
+  .wallet-card .action-buttons .btn-withdraw:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .wallet-card .action-buttons .btn-deposit:active,
+  .wallet-card .action-buttons .btn-withdraw:active {
+      transform: translateY(1px);
+      box-shadow: none;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+  }
+  
+  .modal-content h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .payment-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .payment-buttons button {
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    background-color: #000000;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .payment-buttons button:hover {
+    transform: translateY(-2px);
+    background-color: #1a1a1a;
+  }
+  
+  .payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .payment-form input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .confirm-button {
+    padding: 12px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .confirm-button:hover {
+    background-color: #1a1a1a;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .close-button:hover {
+    color: #333;
+  }
+  
+  .transaction-section {
+    padding: 20px;
+    height: calc(100vh - 400px); /* Adjust the height based on your top section */
+    overflow: hidden;
+  }
+    .transaction-section {
+      padding: 20px;
+      height: 380px; /* Fixed height for scrollable area */
+      overflow: hidden;
+    }
+  
+    .transaction-section h3 {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+  
+    .transaction-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+  
+    .transaction-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      color: black; /* Set font color to black */
+    }
+    
+    .transaction-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .transaction-name {
+      font-weight: 500;
+      color: black; /* Ensure transaction name text is black */
+    }
+    
+    .transaction-date {
+      font-size: 12px;
+      color: #666; /* Date can remain subtle or change to black if needed */
+      margin-top: 4px;
+    }
+    
+    .transaction-amount {
+      font-weight: 600;
+      color: black; /* Set amount text color to black */
+    }
+    
+    .transaction-amount.positive {
+      color: green; /* Positive amount in black */
+    }
+    
+    .transaction-amount.negative {
+      color: red; /* Negative amount in black */
+    }
+    
+    /* Styling the scrollbar */
+    .transaction-list::-webkit-scrollbar {
+      width: 8px;
+    }
+  
+    .transaction-list::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+  
+    .transaction-list::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+  
+    .transaction-list::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  .transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+  }
+  
+  .transaction-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .transaction-name {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .transaction-date {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+  }
+  
+  .transaction-amount {
+    font-weight: 600;
+  }
+  
+  .transaction-amount.positive {
+    color: #2ecc71;
+  }
+  
+  .transaction-amount.negative {
+    color: #e74c3c;
+  }
+  

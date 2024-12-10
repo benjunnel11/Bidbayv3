@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './bidderhomepage.css';
-import EWalletManagement from '../../E-WalletManagement/Wallet';
-import Sidebar from './Sidebar';
-import { auth, firestore, storage } from '../../firebase';
+import { auth, firestore } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import BidderWallet from '../../E-WalletManagement/Bidder/bidderWallet';
 import BidBayLogo from '../../image/Bidbay.png';
+import SidebarB from './SidebarB';
+import './bidderhomepage.css';
 
 function BidderHomePage() {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [isNavOpen, setIsNavOpen] = useState(false);
   const [currentContent, setCurrentContent] = useState('dashboard');
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [profilePictureURL, setProfilePictureURL] = useState('');
-  const [userName, setUserName] = useState();
-  const [userEmail, setUserEmail] = useState();
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   const [userData, setUserData] = useState({
       name: '',
@@ -57,38 +53,12 @@ function BidderHomePage() {
     }
   };
 
-  // Toggle Sidebar visibility
-  const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible);
-  };
-
-  // Close Sidebar
-  const closeSidebar = () => {
-    setIsSidebarVisible(false);
-  };
-
-  const handleSearch = () => {
-    setSearchTerm('search');
-  };
-
-  const handleViewAuctions = () => {
-    navigate('/viewauctions');
-  };
-
-  const handleViewProfile = () => {
-    navigate('/profile');
-  };
-
-  const handleWatchlist = () => {
-    navigate('/watchlist');
+ const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
   };
 
   const handleWallet = () => {
     setCurrentContent('wallet');
-  };
-
-  const handleViewHistory = () => {
-    navigate('/bidhistory');
   };
 
   const handleLogoutClick = () => {
@@ -112,23 +82,15 @@ function BidderHomePage() {
     <div className="bidder-homepage">
       {/* Profile container */}
       <div className="profile-container" onClick={handleProfileManagement}>
-  <h3>{userData.name || "User Name"}</h3>
-  <div className="profile-image">
-    <img 
-      src={profilePictureURL} 
-      alt="Profile" 
-      onError={(e) => e.target.src = 'default-avatar.png'} // Fallback for broken images
-    />
-  </div>
-</div>
-
-      {/* Pass visibility, close function, and other props to Sidebar */}
-      <Sidebar 
-        onWalletClick={handleWallet}
-        onLogoutClick={handleLogoutClick}
-        isVisible={isSidebarVisible} // Pass visibility
-        onCloseSidebar={closeSidebar} // Pass the close function
-      />
+        <h3>{userData.name || "User Name"}</h3>
+        <div className="profile-image">
+          <img 
+            src={profilePictureURL} 
+            alt="Profile" 
+            onError={(e) => e.target.src = 'default-avatar.png'} // Fallback for broken images
+          />
+        </div>
+      </div>
 
       <div className="top-bar">
         <div className="logo-container">
@@ -136,7 +98,6 @@ function BidderHomePage() {
             src={BidBayLogo}
             alt="BidBay Logo" 
             className="logo" 
-            onClick={toggleSidebar} // Toggle sidebar on logo click
             style={{ cursor: 'pointer' }}
           />
         </div>
@@ -145,9 +106,16 @@ function BidderHomePage() {
         </div>
       </div>
 
+      <SidebarB 
+        isNavOpen={isNavOpen}
+        onWalletClick={() => setCurrentContent("wallet")}
+        onLogoutClick={handleLogoutClick}
+        toggleNav={toggleNav} 
+      />
+
       <div className="content-container">
         <div className="main-content">            
-          {currentContent === 'wallet' && <EWalletManagement />}
+          {currentContent === 'wallet' && <BidderWallet />}
         </div>
       </div>
 

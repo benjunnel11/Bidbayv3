@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth, firestore} from '../firebase';
+import { auth, firestore} from '../../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import './Wallet.css';
 
@@ -35,25 +35,32 @@ const Wallet = () => {
     
       const fetchUserProfile = async (uid) => {
         try {
-            const userDoc = doc(firestore, 'userBidder' || 'userSeller', uid);
-            const userSnap = await getDoc(userDoc);
+            let userDoc, userSnap, collectionName;
+    
+            // Check in userSeller collection
+            userDoc = doc(firestore, 'userSeller', uid);
+            userSnap = await getDoc(userDoc);
+            collectionName = 'userSeller';
     
             if (userSnap.exists()) {
                 const data = userSnap.data();
+                console.log(`Fetched User Data from ${collectionName}:`, data); // Debug the fetched data
                 setUserName(data.firstName);
                 setUserData({
                     name: data.firstName,
                     profilePicture: data.profilePicture,
-                    balance: data.balance || 0
+                    balance: data.balance || 0,
                 });
                 setProfilePictureURL(data.profilePicture);
                 setTransactionHistory(data.transactionHistory || []);
+            } else {
+                console.warn(`No document found in either userSeller or userBidder collection for UID: ${uid}`);
             }
         } catch (error) {
             console.error("Error fetching user data:", error);
         }
-    };
-    
+
+    };    
 
     const handleDeposit = () => {
         setShowPaymentModal(true);
@@ -270,7 +277,7 @@ const updateTransactionHistory = async (transaction) => {
                                 <span>RefID: {txn.refID}</span>
                                 <span>{txn.date}</span>
                                 <span style={{ color: txn.mode === 'Deposit' ? 'green' : 'red' }}>
-                                    Amount: {txn.mode === 'Deposit' ? (
+                                        {txn.mode === 'Deposit' ? (
                                             <span style={{ color: 'green', fontWeight: 'bold' }}>+ </span>
                                         ) : (
                                             <span style={{ color: 'red', fontWeight: 'bold' }}>- </span>

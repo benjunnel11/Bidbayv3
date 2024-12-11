@@ -1,160 +1,119 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom'; // Import useNavigate
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import { firestore, auth } from '../firebase';  // Import Firebase auth
 import './biddingmanagement.css';
 
 function Biddingpage() {
-  // State for opening/closing dates and auction status
-  const [openingDate, setOpeningDate] = useState("08/30/2024");
-  const [closingDate, setClosingDate] = useState("09/30/2024");
-  const [auctionStatus, setAuctionStatus] = useState("Open");
+  // State for auction info
   const [managementText, setManagementText] = useState("BIDDING MANAGEMENT");
   const [historyText, setHistoryText] = useState("HISTORY");
 
-  // Initialize useNavigate
+  // User profile data state
+  const [userProfile, setUserProfile] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: ''
+  });
+
+  const [userId, setUserId] = useState(null); // Track user ID dynamically
   const navigate = useNavigate();
+
+  // Fetching user ID from Firebase Authentication
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("User ID: ", user.uid);  // Check if user ID is being set
+        setUserId(user.uid);
+      } else {
+        setUserId(null); // Handle if no user is logged in
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []);
+
+  // Fetch user profile data from Firestore when userId changes
+  useEffect(() => {
+    if (userId) {
+      const fetchUserProfile = async () => {
+        try {
+          const docRef = doc(firestore, 'users', userId);  // Make sure 'users' is the correct collection
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setUserProfile(docSnap.data());  // Set profile data
+          } else {
+            console.log("No such document!");
+          }
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
+        }
+      };
+
+      fetchUserProfile();
+    }
+  }, [userId]); // Trigger fetching when userId changes
 
   return (
     <div className="bidding-page">
+      {/* Return Button */}
+      <button 
+        className="return-button" 
+        onClick={() => navigate('/bidderhomepage')} // Navigate to Homepage
+      >
+        ←
+      </button>
+
       {/* Header Section */}
       <header className="header">
-        <h1>{managementText}</h1>
-        <nav>
-          <NavLink to="/manage-auction">Manage Auction</NavLink>
-          <NavLink to="/auction-items">Auction Items</NavLink>
-          <NavLink to="/report">Report</NavLink>
-        </nav>
+        <h1>{historyText}</h1>
       </header>
 
-      {/* Main Section */}
-      <div className="main-section">
-        <div className="auction-info">
-          <div 
-            className="editable-management-text" 
-            contentEditable 
-            suppressContentEditableWarning 
-            onBlur={(e) => setManagementText(e.target.innerText)}
-          >
-            {managementText}
-          </div>
-          <div 
-            className="editable-history-text" 
-            contentEditable 
-            suppressContentEditableWarning 
-            onBlur={(e) => setHistoryText(e.target.innerText)}
-          >
-            {historyText}
-          </div>
+      {/* User Profile Information */}
+      <div className="user-profile">
+        <h2>User Profile</h2>
+        <p>First Name: {userProfile.firstName}</p>
+        <p>Last Name: {userProfile.lastName}</p>
+        <p>Email: {userProfile.email}</p>
+        <p>Phone: {userProfile.phone}</p>
+        <p>Address: {userProfile.address}</p>
+      </div>
 
-          <div className="auction-dates">
-            {/* Editable dates for opening and closing packages */}
-            <div className="opening-package">
-              <label>Opening Package: </label>
-              <input 
-                type="date" 
-                value={openingDate} 
-                onChange={(e) => setOpeningDate(e.target.value)} 
-              />
-            </div>
-            <div className="closing-package">
-              <label>Closing Package: </label>
-              <input 
-                type="date" 
-                value={closingDate} 
-                onChange={(e) => setClosingDate(e.target.value)} 
-              />
-            </div>
-            {/* Dropdown to toggle auction status */}
-            <div className="auction-status">
-              <label>Status: </label>
-              <select 
-                value={auctionStatus} 
-                onChange={(e) => setAuctionStatus(e.target.value)}
-              >
-                <option value="Open">Open Auction</option>
-                <option value="Close">Close Auction</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="banner-image">
-            {/* Placeholder for image */}
-            <img src="./Image/BiddingImage.jpg" alt="Auction Banner" />
-          </div>
-        </div>
-
-        {/* Bid Form Section */}
-        <div className="bid-form">
-          <h3>BID FORM</h3>
-          <div className="bidder-info">
-            <div className="bidder-row">
-              <label>Name & Surname:</label>
-              <input type="text" value="auto" readOnly />
-              <label>Section:</label>
-              <input type="text" value="auto" readOnly />
-              <label>Position:</label>
-              <input type="text" value="auto" readOnly />
-            </div>
-            <div className="bidder-row">
-              <label>Account Number:</label>
-              <input type="text" value="input" />
-              <label>Phone Number:</label>
-              <input type="text" value="auto" readOnly />
-            </div>
-          </div>
-
-          {/* Auction History Table */}
-          <h4>Auction History:</h4>
-          <table className="auction-table">
-            <thead>
-              <tr>
-                <th>Bid Number</th>
-                <th>Seller Name</th>
-                <th>Specification/Version</th>
-                <th>Quantity</th>
-                <th>Item</th>
-                <th>Bidding Price</th>
-                <th>Payment</th>
-                <th>Condition</th>
-                <th>Note</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Sample Data */}
-              <tr>
-                <td>1</td>
-                <td>Isaac</td>
-                <td>1</td>
-                <td>99</td>
-                <td>Painting</td>
-                <td>20.000</td>
-                <td><button>Choose Payment</button></td>
-                <td>Old</td>
-                <td>Oh my god</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Ramses</td>
-                <td>2</td>
-                <td>99</td>
-                <td>Robotics</td>
-                <td>40,000</td>
-                <td><button>Choose Payment</button></td>
-                <td>New</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-
-          {/* Options Button */}
-          <div className="options-container">
-            <button 
-              className="options-button" 
-              onClick={() => navigate('/bidderhomepage')} // Navigate to BidderHomePage
-            >
-              Back
-            </button>
-          </div>
-        </div>
+      {/* Auction History Table */}
+      <div className="auction-history">
+        <h3>Auction History:</h3>
+        <table className="auction-table">
+          <thead>
+            <tr>
+              <th>Bid Number</th>
+              <th>Seller Name</th>
+              <th>Specification/Version</th>
+              <th>Quantity</th>
+              <th>Item</th>
+              <th>Bidding Price</th>
+              <th>Payment</th>
+              <th>Condition</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Sample Data - Replace with actual Firebase data */}
+            <tr>
+              <td>1</td>
+              <td>Isaac</td>
+              <td>1</td>
+              <td>99</td>
+              <td>Painting</td>
+              <td>20,000</td>
+              <td><button>Choose Payment</button></td>
+              <td>Old</td>
+              <td>Notes</td>
+            </tr>
+            {/* Additional rows here */}
+          </tbody>
+        </table>
       </div>
     </div>
   );

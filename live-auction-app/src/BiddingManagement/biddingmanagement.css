@@ -1,187 +1,85 @@
-/* General page styling for overall layout */
+/* General Page Styling */
 .bidding-page {
     padding: 5px;
     font-family: Arial, sans-serif;
+    position: relative;
 }
 
-/* Header (This is the area containing the "Bidding Management" text) */
+/* Return Button - Smaller and positioned at the top-left */
+.return-button {
+    position: absolute;
+    top: 10px;  /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+    padding: 3px 6px; /* Adjust for smaller button */
+    background-color: #7f736f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;  /* Better font size for visibility */
+    border-radius: 4px;
+}
+
+.return-button:hover {
+    background-color: #4e5d64;
+}
+
+/* Header */
 .header {
-    background-color: #0b4e01; /* Dark red background */
-    color: white; /* White text color */
-    padding: 30px 30px;
-    text-align: left; /* Align header content to the left */
-    position: relative; /* Optional, if you have other elements to position */
+    background-color: #292626; 
+    color: white;
+    padding: 30px;
+    text-align: left;
+    bottom: 5px;
 }
 
 .header h1 {
-    margin: 0; /* Removes default margin */
-    font-size: 24px; /* Size of the "Bidding Management" text */
-    line-height: 1.5; /* Optional: adjust line height for better spacing */
+    font-size: 28px;
+    font-weight: bold;
 }
 
-/* Navigation styles remain unchanged */
-.header nav {
-    margin-top: 10px; /* Spacing between the header title and navigation links */
-}
-
-.header nav a {
-    color: white;
-    margin: 20px 20px;
-    text-decoration: none; /* Remove underline from navigation links */
-}
-
-/* Main Section (Holds the auction info, bid form, and table) */
-.main-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers content horizontally */
-}
-
-/* Auction Info Section (Opening/Closing dates, Status) */
-.auction-info {
-    width: 100%;
-    padding: 10px;
-    background-color: #9ff996; /* Light grey background for clarity */
-    margin-bottom: 20px;
-    border-radius: 10px; /* Rounded corners */
-}
-
-/* Editable text styles for management and history titles */
-.editable-management-text,
-.editable-history-text {
-    font-size: 24px; /* Size for the editable titles */
-    font-weight: bold; /* Make text bold */
-    color: rgb(0, 0, 0); /* Text color */
-    text-align: center; /* Center the text */
-
-    margin-bottom: 0px; /* Space between titles */
-    padding: 5px; /* Add padding for better touch target */
-    border: 1px dashed transparent; /* Optional: add a border to show it's editable */
-}
-
-.editable-management-text:focus,
-.editable-history-text:focus {
-    border: 1px dashed white; /* Show a dashed border when editing */
-    background: rgba(255, 255, 255, 0.1); /* Light background while editing */
-}
-
-.auction-info h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* Auction dates and status styling (now vertically stacked) */
-.auction-dates {
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    margin-bottom: 5px;
-}
-
-.auction-dates div {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 5px; /* Add space between Opening and Closing Package */
-}
-
-.auction-dates label {
-    margin-bottom: 5px;
-}
-
-.auction-dates input,
-.auction-dates select {
-    padding: 5px;
-    font-size: 16px;
-    width: 180px;
-}
-
-/* Auction Banner (For the banner image below the dates) */
-.banner-image {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.banner-image img {
-    max-width: 100%; /* Ensures banner image is responsive */
-    height: auto;
-}
-
-/* Bid Form (Fields to input name, position, etc.) */
-.bid-form {
-    width: 100%;
+/* User Profile Section */
+.user-profile {
+    background-color: #948e93;
     padding: 20px;
-    background-color: #9ff996;
-    border-radius: 8px; /* Rounded corners */
+    margin: 10px 0;
+    border-radius: 8px;
 }
 
-.bid-form h3 {
-    font-size: 18px;
-    margin-bottom: 20px;
-    text-align: center; /* Centers the "BID FORM" text */
+.user-profile p {
+    margin: 10px 0;
 }
 
-/* Bidder information fields */
-.bidder-info {
-    display: flex;
-    justify-content: space-between; /* Spreads bidder input fields evenly across */
-    margin-bottom: 20px;
+/* Auction History Table */
+.auction-history {
+    margin-top: 20px;
 }
 
-.bidder-row {
-    display: flex;
-    flex-direction: column;
-}
-
-.bidder-row label {
-    margin-bottom: 5px;
-}
-
-.bidder-row input {
-    padding: 5px;
-    font-size: 16px;
-    width: 180px;
-}
-
-/* Auction History Table (Where past bids are displayed) */
 .auction-table {
     width: 100%;
-    border-collapse: collapse; /* Remove gaps between cells */
+    border-collapse: collapse;
 }
 
 .auction-table th,
 .auction-table td {
     padding: 10px;
     text-align: left;
-    border: 1px solid #000000; /* Light borders around table cells */
+    border: 1px solid #4e5d64;
 }
 
 .auction-table th {
-    background-color: #0b4e01; /* Dark red for table headers */
-    color: white; /* White text color for headers */
+    background-color: #31353b;
+    color: white;
 }
 
-/* Options Button (Button below the auction history) */
-.options-container {
-    display: flex;
-    justify-content: center; /* Centers the options button */
-    margin-top: 20px;
-    
-}
-
+/* Button Styles */
 .options-button {
     padding: 10px 20px;
-    background-color: #8b0000;
+    background-color: #292626;
     color: white;
     border: none;
-    border-radius: 5px;
-    cursor: pointer; /* Pointer cursor on hover */
+    cursor: pointer;
 }
 
 .options-button:hover {
-    background-color: #a40000; /* Darker shade of red on hover */
-}
-
-.auction-info h2 span {
-    margin: 0 5px; /* Adjust spacing as needed */
-    font-weight: bold; /* Example of making the text bold */
+    background-color: #4e5d64;
 }

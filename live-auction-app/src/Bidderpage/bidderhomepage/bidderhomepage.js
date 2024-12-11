@@ -7,6 +7,12 @@ import BidBayLogo from '../../image/Bidbay.png';
 import SidebarB from './SidebarB';
 import './bidderhomepage.css';
 
+// Images for the slideshow
+import slide1 from './Images/BidBuy.jpg';
+import slide2 from './Images/Warning.jpg';
+import slide3 from './Images/Security.jpg';
+import slide4 from './Images/Seller.jpg';
+
 function BidderHomePage() {
   const navigate = useNavigate();
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -15,11 +21,16 @@ function BidderHomePage() {
   const [profilePictureURL, setProfilePictureURL] = useState('');
 
   const [userData, setUserData] = useState({
-      name: '',
-      email: '',
-      profilePicture: '',
-      balance: 0
+    name: '',
+    email: '',
+    profilePicture: '',
+    balance: 0
   });
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Slideshow Images
+  const slides = [slide1, slide2, slide3, slide4];
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -53,7 +64,15 @@ function BidderHomePage() {
     }
   };
 
- const toggleNav = () => {
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
+  const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
 
@@ -77,6 +96,15 @@ function BidderHomePage() {
   const handleProfileManagement = () => {
     navigate('/profilemanagement');
   };
+
+  // Automatic slide change every 3 seconds
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 3000); // Change slide every 3 seconds
+
+    return () => clearInterval(slideInterval); // Cleanup interval
+  }, [slides.length]);
 
   return (
     <div className="bidder-homepage">
@@ -117,6 +145,17 @@ function BidderHomePage() {
         <div className="main-content">            
           {currentContent === 'wallet' && <BidderWallet />}
         </div>
+      </div>
+
+      {/* Slideshow */}
+      <div className="slideshow">
+        <button className="slide-button left" onClick={handlePrevSlide}>
+          &#8249;
+        </button>
+        <img src={slides[currentSlide]} alt="Slide" className="slide-image" />
+        <button className="slide-button right" onClick={handleNextSlide}>
+          &#8250;
+        </button>
       </div>
 
       {/* Logout modal */}

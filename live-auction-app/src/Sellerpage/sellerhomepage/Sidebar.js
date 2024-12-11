@@ -8,7 +8,7 @@ function Sidebar({ isNavOpen, onWalletClick, onSalesClick, onLogoutClick, toggle
     const navigate = useNavigate();
 
     const handleAddNewItem = () => {
-        navigate('/addnewitem');
+        navigate('/addnewitems');
     };
 
     const onClickLive = () => {

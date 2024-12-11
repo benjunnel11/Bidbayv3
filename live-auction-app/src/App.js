@@ -16,8 +16,10 @@ import SellerWallet from './E-WalletManagement/Seller/Wallet';
 import BidderWallet from './E-WalletManagement/Bidder/bidderWallet';
 import AboutUs from './About/aboutUs';
 import Contacts from './Contact/Contacts';
+import ItemManagement from './ItemManagement/itemmanagement';
 import Sales from './SalesManagement/Sales';
 import WatchLive from './WatchLive/watchlive';
+import ItemManagementAddItems from './ItemManagementAddItems/itemmanagementadditems';
 import './App.css';
 
 function App() {
@@ -34,9 +36,11 @@ function App() {
           <Route path='/bidderregistration' element={<BidderRegistrationPage/>}/>
           <Route path='/bidderregistration2' element={<BidderRegistrationPage2/>}/>
           <Route path='/sellerhomepage' element={<SellerHomePage/>}/>
+          <Route path='/additemspage' element={<ItemManagementAddItems/>}/>
           <Route path='/bidderhomepage' element={<BidderHomePage/>}/>
           <Route path='/biddingmanagement' element={<BiddingManagement/>}/> 
           <Route path='/profilemanagement' element={<ProfileManagement/>}/>
+          <Route path='/addnewitems' element={<ItemManagement/>}/>
           <Route path='*' element={<Homepage/>}/>
           <Route path="/about" element={<AboutUs />} />
           <Route path="/Contacts" element={<Contacts />} />

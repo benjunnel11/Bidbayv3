@@ -15,8 +15,7 @@ function App() {
         <nav className="nav-left">
           <ul>
             <Link to="/about" className="nav-link">About Us</Link>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/store-list">StoreList</a></li>
+            <Link to="/contacts" className="about-link">Contact</Link>
           </ul>
         </nav>
         <div className="nav-right">

@@ -15,6 +15,7 @@ import ProfileManagement from './ProfileManagement/profilemanagement';
 import SellerWallet from './E-WalletManagement/Seller/Wallet';
 import BidderWallet from './E-WalletManagement/Bidder/bidderWallet';
 import AboutUs from './About/aboutUs';
+import Contacts from './Contact/Contacts';
 import Sales from './SalesManagement/Sales';
 import WatchLive from './WatchLive/watchlive';
 import './App.css';
@@ -38,6 +39,7 @@ function App() {
           <Route path='/profilemanagement' element={<ProfileManagement/>}/>
           <Route path='*' element={<Homepage/>}/>
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/contacts" element={<Contacts />} />
           <Route path="/watchlive" element={<WatchLive />} />
         </Routes>
       </Router>
